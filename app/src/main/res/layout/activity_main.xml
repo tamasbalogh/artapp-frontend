@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/mainActivityConstraintLayout">
+
+    <ImageView
+        android:id="@+id/mainActivityLogoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/lalilogo2" />
+
+    <ProgressBar
+        android:id="@+id/mainActivityProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/mainActivityButtonLocalData"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityLogoImageView" />
+
+    <Button
+        android:id="@+id/mainActivityButtonLocalData"
+        style="@style/buttonStyle"
+        android:layout_marginTop="32dp"
+        android:onClick="startButtonOnClick"
+        android:text="Mixed Game With Local Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/mainActivityButtonMixedBackend"
+        style="@style/buttonStyle"
+        android:layout_marginTop="12dp"
+        android:onClick="startButtonOnClick"
+        android:text="Mixed Game With Backend"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityButtonLocalData" />
+
+    <Button
+        android:id="@+id/mainActivityButtonRegularBackend"
+        style="@style/buttonStyle"
+        android:layout_marginTop="12dp"
+        android:onClick="startButtonOnClick"
+        android:text="Regular Game With Backend"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityButtonMixedBackend" />
+
+
+
+
+</android.support.constraint.ConstraintLayout>
