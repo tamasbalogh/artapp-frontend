@@ -17,6 +17,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
 import baloghtamas.lali.artapp.data.Language;
 import baloghtamas.lali.artapp.data.PreferencesHelper;
@@ -24,10 +29,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
 
-    ProgressBar progressBar;
-    Button first,second,third;
-    AsyncHttpClient asyncHttpClient;
-
+    Button mixed,regular;
 
     @Inject
     PreferencesHelper preferencesHelper;
@@ -39,10 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("ArtApp");
 
-        progressBar = findViewById(R.id.mainActivityProgressBar);
-        first = findViewById(R.id.mainActivityButtonLocalData);
-        second = findViewById(R.id.mainActivityButtonMixedBackend);
-        third = findViewById(R.id.mainActivityButtonRegularBackend);
+        mixed = findViewById(R.id.mainActivityButtonMixed);
+        regular = findViewById(R.id.mainActivityButtonRegular);
         ((ArtApp)getApplication()).getApplicationComponent().inject(this);
 
         preferencesHelper.setLanguage(Language.ENGLISH);
@@ -50,88 +50,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startButtonOnClick(View v){
-        if(v.getId() == R.id.mainActivityButtonLocalData){
+        if(!isNetworkAvailable()){
+            ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), "Network is not available.");
+            return;
+        }
+
+        if(v.getId() == R.id.mainActivityButtonMixed){
             startActivity(new Intent(this,GameActivity.class));
         }
 
-        if(v.getId() == R.id.mainActivityButtonMixedBackend){
-            if(!isNetworkAvailable()){
-                ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), "Network is not available.");
-                return;
-            }
-            final String MIXED_URL = "http://172.20.16.134:8798/ArtApp/rest/mix";
-            asyncHttpClient = new AsyncHttpClient();
-            asyncHttpClient.setMaxRetriesAndTimeout(3,500);
-            asyncHttpClient.get(this, MIXED_URL, new JsonHttpResponseHandler() {
-                public void onStart() {
-                    showProgressBar();
-                }
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    hideProgressBar();
-                    ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), "Success");
-                    try {
-                        JSONArray games = response.getJSONArray("games");
-                        for (int i = 0; i < games.length(); i++) {
-                            ArtApp.log(games.getJSONObject(i).toString());
-                        }
-                        Intent intent = new Intent(getApplicationContext(),GameActivity.class);
-                        intent.putExtra("games",games.toString());
-                        startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    super.onFailure(statusCode, headers, responseString, throwable);
-                    hideProgressBar();
-                    ArtApp.log(responseString.toString());
-                    ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), "The following website is not available." + System.getProperty("line.separator") + MIXED_URL);
-                    asyncHttpClient = null;
-                }
-
-                @Override
-                public void onCancel() {
-                    hideProgressBar();
-                }
-            });
-        }
-
-        if(v.getId() == R.id.mainActivityButtonRegularBackend){
+        if(v.getId() == R.id.mainActivityButtonRegular){
             startActivity(new Intent(this,RegularActivity.class));
         }
-
     }
 
-    private void showProgressBar(){
-        progressBar.setVisibility(View.VISIBLE);
-        first.setClickable(false);
-        second.setClickable(false);
-        third.setClickable(false);
-    }
-
-    private void hideProgressBar(){
-        progressBar.setVisibility(View.GONE);
-        first.setClickable(true);
-        second.setClickable(true);
-        third.setClickable(true);
-    }
 
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onBackPressed() {
-        if( asyncHttpClient != null){
-            asyncHttpClient.cancelAllRequests(true);
-            asyncHttpClient = null;
-            return;
-        }
-
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;

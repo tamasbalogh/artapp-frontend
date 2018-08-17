@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import baloghtamas.lali.artapp.fragments.Game10Fragment;
 import baloghtamas.lali.artapp.fragments.Game11Fragment;
 import baloghtamas.lali.artapp.fragments.Game1Fragment;
@@ -22,38 +26,67 @@ import baloghtamas.lali.artapp.fragments.Game7Fragment;
 import baloghtamas.lali.artapp.fragments.Game8Fragment;
 import baloghtamas.lali.artapp.fragments.Game9Fragment;
 import baloghtamas.lali.artapp.fragments.ResultFragment;
+import cz.msebera.android.httpclient.Header;
 
 public class GameActivity extends AppCompatActivity {
 
-    JSONArray games;
+
     int fragmentCounter = 0;
     int correctAnswerCounter = 0;
+    FrameLayout frameLayout;
+    AsyncHttpClient asyncHttpClient;
+    ProgressBar progressBar;
+    JSONArray games;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        Intent intent = getIntent();
-        if(intent != null){
-            String jsonArray = intent.getStringExtra("games");
-            try {
-                games = new JSONArray(jsonArray);
-            } catch (JSONException e) {
-                e.printStackTrace();
+
+        frameLayout = findViewById(R.id.gameActivityFrameLayout);
+        progressBar = findViewById(R.id.gameActivityProgressBar);
+
+
+        final String MIXED_URL = "http://172.20.16.134:8798/ArtApp/rest/mix";
+        asyncHttpClient = new AsyncHttpClient();
+        asyncHttpClient.get(this, MIXED_URL, new JsonHttpResponseHandler() {
+            public void onStart() {
+                showProgressBar();
             }
-        } else {
-            try {
-                JSONObject file = new JSONObject(ArtApp.loadJsonObjectFromFile(this));
-                games = file.getJSONArray("games");
-            } catch (JSONException e) {
-                e.printStackTrace();
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                hideProgressBar();
+                frameLayout.setVisibility(View.VISIBLE);
+                try {
+                    games = response.getJSONArray("games");
+                    for (int i = 0; i < games.length(); i++) {
+                        ArtApp.log(games.get(i).toString());
+                    }
+                    showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        try {
-            showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                hideProgressBar();
+                ArtApp.log(responseString.toString());
+                ArtApp.showSnackBar(findViewById(R.id.gameActivityConstraintLayout), "The following website is not available." + System.getProperty("line.separator") + MIXED_URL);
+                asyncHttpClient = null;
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                hideProgressBar();
+                finish();
+            }
+        });
     }
 
 
@@ -121,5 +154,13 @@ public class GameActivity extends AppCompatActivity {
         android.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.gameActivityFrameLayout, ResultFragment.newInstance(games.length(), correctAnswerCounter), ResultFragment.TAG);
         transaction.commit();
+    }
+
+    private void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
     }
 }

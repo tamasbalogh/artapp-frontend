@@ -39,6 +39,7 @@ public class Game1Fragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game1,container,false);
         ((GameActivity)getActivity()).getSupportActionBar().setTitle("Combine color & definition");
+        ((GameActivity) getActivity()).changeFragment(true);
         setUp(view);
         return view;
     }
@@ -138,7 +139,7 @@ public class Game1Fragment extends Fragment{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        fragment.setArguments(args);
+        //fragment.setArguments(args);
         return fragment;
     }
 
@@ -154,7 +155,7 @@ public class Game1Fragment extends Fragment{
                 definitionsList.remove(selectedDefinitionPosition);
                 colorsAdapter.notifyDataSetChanged();
                 definitionsAdapter.notifyDataSetChanged();
-                ((TextView)colors.getChildAt(selectedColorPosition)).setTextAppearance(android.R.layout.simple_list_item_1);
+                //((TextView)colors.getChildAt(selectedColorPosition)).setTextAppearance(android.R.layout.simple_list_item_1);
                 colors.getChildAt(selectedColorPosition).setBackgroundColor(view.getResources().getColor(R.color.defaultItem));
                 ((TextView)colors.getChildAt(selectedColorPosition)).setTextColor(view.getResources().getColor(android.R.color.black));
                 definitions.getChildAt(selectedDefinitionPosition).setBackgroundColor(view.getResources().getColor(R.color.defaultItem));

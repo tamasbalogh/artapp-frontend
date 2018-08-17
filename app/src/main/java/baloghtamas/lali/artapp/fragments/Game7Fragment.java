@@ -32,6 +32,7 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game7,container,false);
         ((GameActivity)getActivity()).getSupportActionBar().setTitle("Choose the correct one");
+        ((GameActivity) getActivity()).changeFragment(true);
         setUp(view);
         return view;
     }
@@ -78,7 +79,7 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        fragment.setArguments(args);
+        //fragment.setArguments(args);
         return fragment;
     }
 
