@@ -2,8 +2,11 @@ package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +52,9 @@ public class Game9Fragment extends Fragment {
             image = view.findViewById(R.id.fragmentGame9ImageView);
             words = view.findViewById(R.id.fragmentGame9WordsFlexBox);
 
-            Resources res = view.getResources();
-            int imageId = res.getIdentifier(bundle.getString("image") , "drawable", BuildConfig.APPLICATION_ID);
-            image.setImageResource(imageId);
+            byte[] decodedString = Base64.decode(bundle.getString("image"), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            image.setImageBitmap(decodedByte);
 
             correctAnswer = bundle.getStringArray("answers")[0];
             answers = ArtApp.mixStringArray(bundle.getStringArray("answers"));

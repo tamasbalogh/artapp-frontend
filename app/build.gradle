@@ -38,6 +38,9 @@ dependencies {
     //loop4j
     implementation 'com.loopj.android:android-async-http:1.4.9'
 
+    //okHTTPClient
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
     //snackbar
     implementation 'com.android.support:design:26.1.0'
 }

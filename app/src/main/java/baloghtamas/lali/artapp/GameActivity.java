@@ -1,19 +1,34 @@
 package baloghtamas.lali.artapp;
 
+import android.Manifest;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.jar.Attributes;
+
 import baloghtamas.lali.artapp.fragments.Game10Fragment;
 import baloghtamas.lali.artapp.fragments.Game11Fragment;
 import baloghtamas.lali.artapp.fragments.Game1Fragment;
@@ -27,6 +42,11 @@ import baloghtamas.lali.artapp.fragments.Game8Fragment;
 import baloghtamas.lali.artapp.fragments.Game9Fragment;
 import baloghtamas.lali.artapp.fragments.ResultFragment;
 import cz.msebera.android.httpclient.Header;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -37,6 +57,7 @@ public class GameActivity extends AppCompatActivity {
     AsyncHttpClient asyncHttpClient;
     ProgressBar progressBar;
     JSONArray games;
+    final String MIXED_URL = "http://172.20.16.134:8798/ArtApp/rest/mix";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +68,6 @@ public class GameActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.gameActivityProgressBar);
 
 
-        final String MIXED_URL = "http://172.20.16.134:8798/ArtApp/rest/mix";
         asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.get(this, MIXED_URL, new JsonHttpResponseHandler() {
             public void onStart() {
@@ -59,10 +79,25 @@ public class GameActivity extends AppCompatActivity {
                 super.onSuccess(statusCode, headers, response);
                 hideProgressBar();
                 frameLayout.setVisibility(View.VISIBLE);
+
+                /*tring veryLongString = response.toString();
+                int maxLogSize = 1000;
+                for(int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
+                    int start = i * maxLogSize;
+                    int end = (i+1) * maxLogSize;
+                    end = end > veryLongString.length() ? veryLongString.length() : end;
+                    ArtApp.log(veryLongString.substring(start, end));
+                }*/
+
                 try {
                     games = response.getJSONArray("games");
+                    ArtApp.log("games length: " + games.length());
                     for (int i = 0; i < games.length(); i++) {
-                        ArtApp.log(games.get(i).toString());
+                        if(games.isNull(i)) {
+                            ArtApp.log(i + " is null.");
+                        } else {
+                            ArtApp.log(i + " - gametype: " + games.getJSONObject(i).getString("gametype"));
+                        }
                     }
                     showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
                 } catch (JSONException e) {
@@ -93,7 +128,7 @@ public class GameActivity extends AppCompatActivity {
     private void showTheProperGameFragment(int gametype, JSONObject game) {
         FragmentManager manager = getFragmentManager();
         android.app.FragmentTransaction transaction = manager.beginTransaction();
-        switch (gametype){
+        switch (gametype) {
             case 1:
                 transaction.replace(R.id.gameActivityFrameLayout, Game1Fragment.newInstance(game), Game1Fragment.TAG);
                 break;
@@ -133,34 +168,51 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void changeFragment(boolean answer) {
-        if(answer){
+        if (answer) {
             correctAnswerCounter++;
         }
         try {
-            if(fragmentCounter < games.length()){
+            if (fragmentCounter < games.length()) {
                 ArtApp.log(games.getJSONObject(fragmentCounter).toString());
                 showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
             } else {
                 showResultFragment();
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void showResultFragment(){
+    private void showResultFragment() {
         FragmentManager manager = getFragmentManager();
         android.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.gameActivityFrameLayout, ResultFragment.newInstance(games.length(), correctAnswerCounter), ResultFragment.TAG);
         transaction.commit();
     }
 
-    private void showProgressBar(){
+    private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressBar(){
+    private void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
     }
+
+    private static boolean isExternalStorageReadOnly() {
+        String extStorageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isExternalStorageAvailable() {
+        String extStorageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
+            return true;
+        }
+        return false;
+    }
+
 }

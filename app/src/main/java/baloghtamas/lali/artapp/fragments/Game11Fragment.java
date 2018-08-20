@@ -2,8 +2,11 @@ package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +60,9 @@ public class Game11Fragment extends Fragment {
             images = bundle.getStringArray("images");
             sentences = bundle.getStringArray("sentences");
 
-            Resources res = view.getResources();
-            int imageId = res.getIdentifier(images[imageCounter] , "drawable", BuildConfig.APPLICATION_ID);
-            image.setImageResource(imageId);
+            byte[] decodedString = Base64.decode(bundle.getString(images[imageCounter]), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            image.setImageBitmap(decodedByte);
 
             helpTextView= view.findViewById(R.id.fragmentGame11HelpTextView);
             stringBuilder.append(sentences[sentenceCounter]);
@@ -101,9 +104,9 @@ public class Game11Fragment extends Fragment {
             imageCounter++;
             if(imageCounter > 2)
                 imageCounter=0;
-            Resources res = view.getResources();
-            int imageId = res.getIdentifier(images[imageCounter] , "drawable", BuildConfig.APPLICATION_ID);
-            image.setImageResource(imageId);
+            byte[] decodedString = Base64.decode(images[imageCounter], Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            image.setImageBitmap(decodedByte);
         }
     };
 

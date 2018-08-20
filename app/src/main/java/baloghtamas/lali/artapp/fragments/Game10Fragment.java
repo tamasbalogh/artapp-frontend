@@ -2,8 +2,11 @@ package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,9 +72,10 @@ public class Game10Fragment extends Fragment {
                 imagePointers[i] = i;
             }
 
-            Resources res = view.getResources();
-            int imageId = res.getIdentifier(images[0], "drawable", BuildConfig.APPLICATION_ID);
-            image.setImageResource(imageId);
+            byte[] decodedString = Base64.decode(images[0], Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            image.setImageBitmap(decodedByte);
+
             title.setText(titles[0].toString());
             description.setText(descriptions[0].toString());
         } else {
@@ -109,9 +113,9 @@ public class Game10Fragment extends Fragment {
         @Override
         public void onClick(View view) {
             imagePointer = getNextPointer(imagePointers, imagePointer);
-            Resources res = view.getResources();
-            int imageId = res.getIdentifier(images[imagePointer], "drawable", BuildConfig.APPLICATION_ID);
-            image.setImageResource(imageId);
+            byte[] decodedString = Base64.decode(images[imagePointer], Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            image.setImageBitmap(decodedByte);
         }
     };
 
@@ -162,9 +166,10 @@ public class Game10Fragment extends Fragment {
 
                 imagePointers[imagePointer] = -1;
                 imagePointer = getNextPointer(imagePointers, imagePointer);
-                Resources res = view.getResources();
-                int imageId = res.getIdentifier(images[imagePointer], "drawable", BuildConfig.APPLICATION_ID);
-                image.setImageResource(imageId);
+
+                byte[] decodedString = Base64.decode(images[imagePointer], Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                image.setImageBitmap(decodedByte);
 
                 descriptionPointers[descriptionPointer] = -1;
                 descriptionPointer = getNextPointer(descriptionPointers, descriptionPointer);
