@@ -1,7 +1,6 @@
 package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,12 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.BuildConfig;
 import baloghtamas.lali.artapp.GameActivity;
 import baloghtamas.lali.artapp.R;
 
@@ -35,7 +31,6 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game7,container,false);
         ((GameActivity)getActivity()).getSupportActionBar().setTitle("Choose the correct one");
-        ((GameActivity) getActivity()).changeFragment(true);
         setUp(view);
         return view;
     }
@@ -82,7 +77,7 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //fragment.setArguments(args);
+        fragment.setArguments(args);
         return fragment;
     }
 

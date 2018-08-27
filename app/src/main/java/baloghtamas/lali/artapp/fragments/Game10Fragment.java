@@ -41,7 +41,6 @@ public class Game10Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game10, container, false);
         ((GameActivity)getActivity()).getSupportActionBar().setTitle("Mix and match");
-        ((GameActivity) getActivity()).changeFragment(true);
         setUp(view);
         return view;
     }
@@ -104,7 +103,7 @@ public class Game10Fragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //fragment.setArguments(args);
+        fragment.setArguments(args);
         return fragment;
     }
 

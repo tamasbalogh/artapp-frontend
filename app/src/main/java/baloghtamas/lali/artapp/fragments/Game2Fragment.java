@@ -1,7 +1,6 @@
 package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,18 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.BuildConfig;
 import baloghtamas.lali.artapp.GameActivity;
 import baloghtamas.lali.artapp.R;
 
@@ -120,12 +113,16 @@ public class Game2Fragment extends Fragment {
                 boolean result = true;
                 for (int i = 0; i < defaultList.size(); i++) {
                     String key = (i+1) + ". ";
-                    ArtApp.log("default: " + defaultList.get(i) + ", answer: " + numberedHashMap.get(key).toString());
+                    //ArtApp.log("default: " + defaultList.get(i) + ", answer: " + numberedHashMap.get(key).toString());
                     if(!defaultList.get(i).toString().equals(numberedHashMap.get(key).toString())){
                         result = false;
                         break;
                     }
                 }
+                if(result)
+                    ArtApp.log("Game2ragment answer is correct.");
+                else
+                    ArtApp.log("Game12Fragment answer is bad.");
                 ((GameActivity)getActivity()).changeFragment(result);
             }
         }

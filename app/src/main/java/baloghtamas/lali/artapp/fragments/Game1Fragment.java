@@ -39,7 +39,6 @@ public class Game1Fragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game1,container,false);
         ((GameActivity)getActivity()).getSupportActionBar().setTitle("Combine color & definition");
-        ((GameActivity) getActivity()).changeFragment(true);
         setUp(view);
         return view;
     }
@@ -139,7 +138,7 @@ public class Game1Fragment extends Fragment{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //fragment.setArguments(args);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -170,14 +169,16 @@ public class Game1Fragment extends Fragment{
     private void checkResult(){
         boolean result = true;
         for(String item : createdHashMap.keySet()){
-            ArtApp.log("key:" + item + ", default value: " +defaultHashMap.get(item) + ", selected value: " + createdHashMap.get(item));
+            //ArtApp.log("key:" + item + ", default value: " +defaultHashMap.get(item) + ", selected value: " + createdHashMap.get(item));
             if(!defaultHashMap.get(item).equals(createdHashMap.get(item))){
                 result = false;
                 break;
             }
-            ArtApp.log("result: " + result);
         }
-        ArtApp.log("result: " + result);
+        if(result)
+            ArtApp.log("Game1Fragment answer is correct.");
+        else
+            ArtApp.log("Game1Fragment answer is bad.");
         ((GameActivity) getActivity()).changeFragment(result);
     }
 }
