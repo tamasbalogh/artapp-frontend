@@ -1,5 +1,6 @@
 package baloghtamas.lali.artapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -62,7 +63,7 @@ public class RegularActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(this,MainActivity.class));
         this.finish();
     }
 }

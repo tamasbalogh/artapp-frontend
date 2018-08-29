@@ -47,10 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(v.getId() == R.id.mainActivityButtonMixed){
             startActivity(new Intent(this,GameActivity.class));
+            finish();
         }
 
         if(v.getId() == R.id.mainActivityButtonRegular){
             startActivity(new Intent(this,RegularActivity.class));
+            finish();
         }
     }
 
@@ -60,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
+            finishAndRemoveTask();
         }
 
         this.doubleBackToExitPressedOnce = true;

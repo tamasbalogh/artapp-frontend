@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -54,6 +55,7 @@ import okhttp3.Response;
 
 public class GameActivity extends AppCompatActivity {
 
+    boolean doubleBackToExitPressedOnce = false;
     public static AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
     int fragmentCounter = 0;
     int correctAnswerCounter = 0;
@@ -104,7 +106,7 @@ public class GameActivity extends AppCompatActivity {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 hideProgressBar();
                 finish();
-                ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), "The backend is not available.");
+                //ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), "The backend is not available.");
             }
 
             @Override
@@ -193,4 +195,22 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            startActivity(new Intent(this,MainActivity.class));
+            this.finish();
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        ArtApp.showSnackBar(findViewById(R.id.gameActivityConstraintLayout),"Click back once again to exit!");
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 }
