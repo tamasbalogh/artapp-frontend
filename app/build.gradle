@@ -19,28 +19,25 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     //dagger2
-    implementation "com.google.dagger:dagger:2.15"
+    implementation 'com.google.dagger:dagger:2.15'
     annotationProcessor "com.google.dagger:dagger-compiler:2.15"
     implementation 'javax.annotation:jsr250-api:1.0'
     implementation 'javax.inject:javax.inject:1'
-
     //flexlayout
     implementation 'com.google.android:flexbox:1.0.0'
-
     //loop4j
     implementation 'com.loopj.android:android-async-http:1.4.9'
-
     //okHTTPClient
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-
     //snackbar
     implementation 'com.android.support:design:26.1.0'
+    //charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

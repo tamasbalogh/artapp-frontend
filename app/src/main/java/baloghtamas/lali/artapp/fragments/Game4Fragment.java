@@ -1,15 +1,16 @@
 package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,8 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.BuildConfig;
-import baloghtamas.lali.artapp.GameActivity;
+import baloghtamas.lali.artapp.MixedGameActivity;
 import baloghtamas.lali.artapp.R;
 
 public class Game4Fragment  extends Fragment {
@@ -35,19 +35,26 @@ public class Game4Fragment  extends Fragment {
     FlexboxLayout allWords, selectedWords;
 
     private String correctAnswer[];
+    private String sentence;
     private ArrayList<String> answers = new ArrayList<>();
     private int appendCounter = 0;
+    private View inflatedView;
+    private boolean answered = false;
+    private boolean correct;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game4,container,false);
-        ((GameActivity)getActivity()).getSupportActionBar().setTitle("Syntactical exercise");
+        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.syntactic_exercise);
         setUp(view);
         return view;
     }
 
     private void setUp(View view) {
+        inflatedView = view;
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             image = view.findViewById(R.id.fragmentGame4ImageView);
@@ -59,7 +66,8 @@ public class Game4Fragment  extends Fragment {
             image.setImageBitmap(decodedByte);
 
             correctAnswer=bundle.getString("sentence").split("\\s+");
-            showAllWords(ArtApp.mixStringArray(bundle.getString("sentence").split("\\s+")));
+            sentence = bundle.getString("sentence");
+            showAllWords(ArtApp.mixStringArray(sentence.split("\\s+")));
         } else {
             ArtApp.log("Bundle is null in the setUp function of Game4Fragment.");
         }
@@ -92,6 +100,19 @@ public class Game4Fragment  extends Fragment {
         }
     }
 
+    private void showAllWordsCorrect(String[] array){
+        for (int i = 0; i < array.length; i++) {
+            Button b = new Button(getActivity());
+            b.setTag(array[i]);
+            b.setText(array[i]);
+            b.setBackground(getResources().getDrawable(R.drawable.button_rounded_10));
+            b.setTextColor(getResources().getColor(R.color.defaultItem));
+            b.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+            b.setClickable(false);
+            allWords.addView(b);
+        }
+    }
+
 
     View.OnClickListener put = new View.OnClickListener() {
         @Override
@@ -106,18 +127,32 @@ public class Game4Fragment  extends Fragment {
             selectedWords.addView(b);
             b.setOnClickListener(delete);
             appendCounter++;
+
             if(allWords.getChildCount() == 0){
-                boolean correct = true;
+                answered = true;
+                getActivity().invalidateOptionsMenu();
+
+                correct = true;
+                int correctCounter = 0;
                 for(int i=0; i < correctAnswer.length; i++){
                     if(!answers.get(i).equals(correctAnswer[i])){
                         correct = false;
-                        ArtApp.log("Game4Fragment answer is bad.");
                         break;
                     }
+                    correctCounter++;
                 }
-                if(correct)
-                    ArtApp.log("Game4Fragment answer is correct.");
-                ((GameActivity)getActivity()).changeFragment(correct);
+
+                allWords.removeAllViews();
+                showAllWordsCorrect(correctAnswer);
+
+                for(int i = 0 ; i < selectedWords.getChildCount(); i++){
+                    if(i < correctCounter){
+                        ((Button)selectedWords.getFlexItemAt(i)).setBackground(getResources().getDrawable(R.drawable.button_rounded_10_correct));
+                    } else {
+                        ((Button)selectedWords.getFlexItemAt(i)).setBackground(getResources().getDrawable(R.drawable.button_rounded_10_wrong));
+                    }
+                    selectedWords.getFlexItemAt(i).setClickable(false);
+                }
             }
         }
     };
@@ -136,5 +171,34 @@ public class Game4Fragment  extends Fragment {
             b.setOnClickListener(put);
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if(answered) {
+            inflater.inflate(R.menu.next_menu, menu);
+        } else {
+            inflater.inflate(R.menu.information_menu, menu);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuInformation:
+                ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
+                break;
+            case R.id.menuNext:
+                if (correct){
+                    ArtApp.log("Game4Fragment answer is correct.");
+                    ((MixedGameActivity) getActivity()).changeFragment(1,0);
+                } else {
+                    ArtApp.log("Game4Fragment answer is bad.");
+                    ((MixedGameActivity) getActivity()).changeFragment(0,1);
+                }
+                break;
+        }
+        return true;
+    }
 
 }

@@ -1,7 +1,6 @@
 package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,34 +21,35 @@ import com.google.android.flexbox.FlexboxLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.BuildConfig;
-import baloghtamas.lali.artapp.GameActivity;
+import baloghtamas.lali.artapp.MixedGameActivity;
 import baloghtamas.lali.artapp.R;
 
-public class Game9Fragment extends Fragment {
+public class Game9Fragment extends Fragment implements View.OnClickListener
+{
 
     public static  String TAG = "Game9Fragment";
 
     ImageView image;
     FlexboxLayout words;
-
     private String correctAnswer = "";
     private String[] answers;
-
+    private boolean answered = false;
+    private boolean correct;
+    private View inflatedView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game9,container,false);
-        ((GameActivity)getActivity()).getSupportActionBar().setTitle("Find the odd one out");
+        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.find_the_odd_one_out);
         setUp(view);
         return view;
     }
 
     private void setUp(View view) {
+        inflatedView = view;
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             image = view.findViewById(R.id.fragmentGame9ImageView);
@@ -64,8 +67,9 @@ public class Game9Fragment extends Fragment {
                 button.setBackground(getResources().getDrawable(R.drawable.button_rounded_10));
                 button.setTextColor(getResources().getColor(R.color.defaultItem));
                 button.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+                button.setTag("fragmentGame9Button" + i);
                 button.setText(answers[i]);
-                button.setOnClickListener(click);
+                button.setOnClickListener(this);
                 words.addView(button);
             }
         } else {
@@ -91,20 +95,57 @@ public class Game9Fragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onClick(View view) {
+        answered = true;
+        getActivity().invalidateOptionsMenu();
 
-
-    View.OnClickListener click = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if(((Button)view).getText().equals(correctAnswer)){
-                ArtApp.log("Game9Fragment answer is correct.");
-                ((GameActivity) getActivity()).changeFragment(true);
-            } else {
-                ArtApp.log("Game9Fragment answer is bad.");
-                ((GameActivity) getActivity()).changeFragment(false);
+        if(((Button)view).getText().equals(correctAnswer)){
+            correct = true;
+            view.setBackground(getResources().getDrawable(R.drawable.button_rounded_10_correct));
+            for (int i = 0; i < answers.length; i++) {
+                Button button = inflatedView.findViewWithTag("fragmentGame9Button" + i);
+                button.setClickable(false);
+            }
+        } else {
+            correct = false;
+            view.setBackground(getResources().getDrawable(R.drawable.button_rounded_10_wrong));
+            for (int i = 0; i < answers.length; i++) {
+                Button button = inflatedView.findViewWithTag("fragmentGame9Button" + i);
+                if(button.getText().equals(correctAnswer)){
+                    button.setBackground(getResources().getDrawable(R.drawable.button_rounded_10_correct));
+                }
+                button.setClickable(false);
             }
         }
-    };
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if(answered) {
+            inflater.inflate(R.menu.next_menu, menu);
+        } else {
+            inflater.inflate(R.menu.information_menu, menu);
+        }
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuInformation:
+                ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
+                break;
+            case R.id.menuNext:
+                if (correct){
+                    ArtApp.log("Game9Fragment answer is correct.");
+                    ((MixedGameActivity) getActivity()).changeFragment(1,0);
+                } else {
+                    ArtApp.log("Game9Fragment answer is bad.");
+                    ((MixedGameActivity) getActivity()).changeFragment(0,1);
+                }
+                break;
+        }
+        return true;
+    }
 }

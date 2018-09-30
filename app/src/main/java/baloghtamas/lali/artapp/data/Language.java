@@ -1,18 +1,33 @@
 package baloghtamas.lali.artapp.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Language {
-        ENGLISH(0),
-        GERMAN(1),
-        FRENCH(2),
-        FINNISH(3);
+        ENGLISH("en"),
+        GERMANY("de"),
+        FRANCE("fr"),
+        FINNISH("fi");
 
-        private final int code;
+        private final String code;
+        private static final Map<String,Language> valuesByCode;
 
-        Language(int language) {
-            this. code = language;
+    static {
+        valuesByCode = new HashMap<>();
+        for(Language language : Language.values()) {
+            valuesByCode.put(language.code, language);
         }
+    }
 
-    public int getCode() {
+    Language(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
         return code;
+    }
+
+    public static Language lookupByCode(String code) {
+        return valuesByCode.get(code);
     }
 }

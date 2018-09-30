@@ -1,9 +1,8 @@
 package baloghtamas.lali.artapp;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -73,4 +72,14 @@ public class ArtApp extends Application {
         snackbar.setActionTextColor(layout.getResources().getColor(R.color.defaultItem))
                 .show();
     }
+
+    public static void showSnackBar(Activity activity, String message){
+        View rootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT);
+        View view = snackbar.getView();
+        view.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
+        snackbar.setActionTextColor(activity.getResources().getColor(R.color.defaultItem))
+                .show();
+    }
+
 }

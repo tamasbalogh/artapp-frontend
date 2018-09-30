@@ -1,38 +1,23 @@
 package baloghtamas.lali.artapp;
 
-import android.Manifest;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.TooManyListenersException;
-import java.util.jar.Attributes;
+import java.util.ArrayList;
 
 import baloghtamas.lali.artapp.fragments.Game10Fragment;
 import baloghtamas.lali.artapp.fragments.Game11Fragment;
@@ -47,22 +32,23 @@ import baloghtamas.lali.artapp.fragments.Game8Fragment;
 import baloghtamas.lali.artapp.fragments.Game9Fragment;
 import baloghtamas.lali.artapp.fragments.ResultFragment;
 import cz.msebera.android.httpclient.Header;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
-public class GameActivity extends AppCompatActivity {
+public class MixedGameActivity extends AppCompatActivity {
+
+    public static final int RESULT_CODE_ON_FAILURE = 1;
+    public static final int RESULT_CODE_SAVED_INSTANCE_STATE = 2;
 
     boolean doubleBackToExitPressedOnce = false;
-    public static AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+    public static AsyncHttpClient asyncHttpClient = new AsyncHttpClient(true,80,9443);
     int fragmentCounter = 0;
-    int correctAnswerCounter = 0;
+    float correctAnswerCounter = 0;
+    float wrongAnswerCounter = 0;
     FrameLayout frameLayout;
     ProgressBar progressBar;
     JSONArray games;
-    final String MIXED_URL = "http://172.20.16.134:8798/ArtApp/rest/mix";
+    //final String MIXED_URL = "http://172.20.16.134:8798/ArtApp/rest/mix";
+    final String MIXED_URL = "https://172.20.16.133:9443/ArtApp/rest/mix";
+    ConstraintLayout layout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,54 +57,78 @@ public class GameActivity extends AppCompatActivity {
 
         frameLayout = findViewById(R.id.gameActivityFrameLayout);
         progressBar = findViewById(R.id.gameActivityProgressBar);
-        asyncHttpClient.get(this, MIXED_URL, new JsonHttpResponseHandler(){
+        layout = findViewById(R.id.gameActivityConstraintLayout);
 
-            @Override
-            public void onStart() {
-                super.onStart();
-                showProgressBar();
-            }
+        if(savedInstanceState == null) {
+            asyncHttpClient.get(this, MIXED_URL, new JsonHttpResponseHandler(){
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                hideProgressBar();
-                frameLayout.setVisibility(View.VISIBLE);
-
-                try {
-                    games = response.getJSONArray("games");
-                    ArtApp.log("games length: " + games.length());
-                    for (int i = 0; i < games.length(); i++) {
-                        if(games.isNull(i)) {
-                            ArtApp.log(i + " is null.");
-                        } else {
-                            ArtApp.log(i + " - gametype: " + games.getJSONObject(i).getString("gametype"));
-                        }
-                    }
-                    showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                @Override
+                public void onStart() {
+                    super.onStart();
+                    showProgressBar();
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                hideProgressBar();
-                finish();
-                //ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), "The backend is not available.");
-            }
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    hideProgressBar();
+                    frameLayout.setVisibility(View.VISIBLE);
 
-            @Override
-            public void onCancel() {
-                hideProgressBar();
-                finish();
-            }
-        });
+                    try {
+                        games = response.getJSONArray("games");
+                        ArtApp.log("games length: " + games.length());
+                        for (int i = 0; i < games.length(); i++) {
+                            if(games.isNull(i)) {
+                                ArtApp.log(i + " is null.");
+                            } else {
+                                ArtApp.log(i + " - gametype: " + games.getJSONObject(i).getString("gametype"));
+                            }
+                        }
+
+                        //ResultFragment teszteléshez
+                        //showResultFragment();
+
+                        //Egyedi fragment teszteléshez
+                        /*for (int i = 0; i < games.length(); i++) {
+                            if(games.getJSONObject(i).getInt("gametype") == 1) {
+                                showTheProperGameFragment(games.getJSONObject(i).getInt("gametype"), games.getJSONObject(i));
+                            }
+                        }*/
+
+                        //Rendes működéshez törölni az előzőeket
+                        showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    hideProgressBar();
+
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("onFailure",getString(R.string.server_is_not_available));
+                    setResult(RESULT_CODE_ON_FAILURE,returnIntent);
+                    finish();
+                }
+
+                @Override
+                public void onCancel() {
+                    hideProgressBar();
+                    finish();
+                }
+            });
+
+        } else {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("onSavedInstanceState",getString(R.string.the_game_was_broken));
+            setResult(RESULT_CODE_SAVED_INSTANCE_STATE,returnIntent);
+            finish();
+        }
+
+
     }
-
-
-
 
     private void showTheProperGameFragment(int gametype, JSONObject game) {
         FragmentManager manager = getFragmentManager();
@@ -162,13 +172,12 @@ public class GameActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void changeFragment(boolean answer) {
-        if (answer) {
-            correctAnswerCounter++;
-        }
+    public void changeFragment(float correct, float wrong) {
+        correctAnswerCounter += correct;
+        wrongAnswerCounter +=wrong;
+        ArtApp.log("Answers correct: " + correctAnswerCounter + ", wrong: " + wrongAnswerCounter);
         try {
             if (fragmentCounter < games.length()) {
-                //ArtApp.log(games.getJSONObject(fragmentCounter).toString());
                 showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
             } else {
                 showResultFragment();
@@ -182,7 +191,10 @@ public class GameActivity extends AppCompatActivity {
     private void showResultFragment() {
         FragmentManager manager = getFragmentManager();
         android.app.FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.gameActivityFrameLayout, ResultFragment.newInstance(games.length(), correctAnswerCounter), ResultFragment.TAG);
+        correctAnswerCounter = 8;
+        wrongAnswerCounter = 5;
+        transaction.replace(R.id.gameActivityFrameLayout,
+                ResultFragment.newInstance(correctAnswerCounter, wrongAnswerCounter), ResultFragment.TAG);
         transaction.commit();
     }
 
@@ -198,12 +210,11 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            startActivity(new Intent(this,MainActivity.class));
-            this.finish();
+            finish();
         }
 
         this.doubleBackToExitPressedOnce = true;
-        ArtApp.showSnackBar(findViewById(R.id.gameActivityConstraintLayout),"Click back once again to exit!");
+        ArtApp.showSnackBar(findViewById(R.id.gameActivityConstraintLayout),getString(R.string.press_back_once_again_to_exit));
 
         new Handler().postDelayed(new Runnable() {
 
@@ -213,4 +224,16 @@ public class GameActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
+    public void reloadFragment(){
+        fragmentCounter--;
+        try {
+            showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

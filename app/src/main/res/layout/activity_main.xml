@@ -22,7 +22,7 @@
         style="@style/buttonStyle"
         android:layout_marginTop="32dp"
         android:onClick="startButtonOnClick"
-        android:text="Mixed Game"
+        android:text="@string/mixed_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
         style="@style/buttonStyle"
         android:layout_marginTop="24dp"
         android:onClick="startButtonOnClick"
-        android:text="Regular Game"
+        android:text="@string/regular_game"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainActivityButtonMixed" />

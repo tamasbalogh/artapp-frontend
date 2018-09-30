@@ -1,9 +1,11 @@
 package baloghtamas.lali.artapp;
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
@@ -14,14 +16,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.Locale;
+
 import javax.inject.Inject;
-import baloghtamas.lali.artapp.data.Language;
+
 import baloghtamas.lali.artapp.data.PreferencesHelper;
 import baloghtamas.lali.artapp.fragments.LanguageDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button mixed,regular;
+    private boolean doubleBackToExitPressedOnce = false;
+    private Button mixed,regular;
 
     @Inject
     PreferencesHelper preferencesHelper;
@@ -29,35 +35,57 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((ArtApp)getApplication()).getApplicationComponent().inject(this);
+
+        if( preferencesHelper.getAlreadyOnBoardStatus() == false) {
+            preferencesHelper.setAlreadyOnBoardStatusToTrue();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            DialogFragment newFragment = new LanguageDialogFragment();
+            newFragment.show(ft, "dialog");
+        }
+
+        Locale locale = new Locale(preferencesHelper.getLanguage().getCode());
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         setContentView(R.layout.activity_main);
 
         mixed = findViewById(R.id.mainActivityButtonMixed);
         regular = findViewById(R.id.mainActivityButtonRegular);
-        ((ArtApp)getApplication()).getApplicationComponent().inject(this);
 
-        preferencesHelper.setLanguage(Language.ENGLISH);
-        ArtApp.log("Language code:" + preferencesHelper.getLanguage());
     }
 
     public void startButtonOnClick(View v){
         if(!isNetworkAvailable()){
-            ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), "Network is not available.");
+            ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), getString(R.string.network_problem));
             return;
         }
 
         if(v.getId() == R.id.mainActivityButtonMixed){
-            startActivity(new Intent(this,GameActivity.class));
-            finish();
+            startActivityForResult(new Intent(this,MixedGameActivity.class),1);
+            //finish();
         }
 
         if(v.getId() == R.id.mainActivityButtonRegular){
             startActivity(new Intent(this,RegularActivity.class));
-            finish();
+            //finish();
         }
     }
 
-
-    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //show onfailure message when call onfailure in GameActivity.
+        if (requestCode == 1) {
+            if(resultCode == MixedGameActivity.RESULT_CODE_ON_FAILURE){
+                ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onFailure"));
+            }
+            if(resultCode == MixedGameActivity.RESULT_CODE_SAVED_INSTANCE_STATE){
+                ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onSavedInstanceState"));
+            }
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -66,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),"Click back once again to exit!");
+        ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),getString(R.string.press_back_once_again_to_exit));
 
         new Handler().postDelayed(new Runnable() {
 
@@ -93,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId()){
             case R.id.menuLanguage:
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -103,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ft.addToBackStack(null);
                 DialogFragment dialogFragment = new LanguageDialogFragment();
+                dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 dialogFragment.show(ft, "dialog");
                 break;
-
             case R.id.menuExit:
                 finishAndRemoveTask();
                 break;

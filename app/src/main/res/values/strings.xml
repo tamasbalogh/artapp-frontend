@@ -1,3 +1,66 @@
 <resources>
     <string name="app_name">ArtApp</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="german">German</string>
+    <string name="finnish">Finnish</string>
+    <string name="mixed_game">Mixed Game</string>
+    <string name="regular_game">Regular Game</string>
+    <string name="network_problem">The Network is not available. Please check your network settings.</string>
+    <string name="server_is_not_available">The server is not available. Please try again later.</string>
+    <string name="press_back_once_again_to_exit">Press back button once again to exit!</string>
+    <string name="select_lesson">Select lesson!</string>
+    <string name="select_level">Select level!</string>
+    <string name="start">Start</string>
+    <string name="correct">Correct</string>
+    <string name="choose_picture">Choose Picture</string>
+    <string name="help">Help</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="select_your_language">SELECT YOUR LANGUAGE</string>
+    <string name="choose">Choose</string>
+    <string name="new_game">New Game</string>
+    <string name="home">Home</string>
+
+    <string name="combine_colors_and_definitions"><![CDATA[Combine colors & definitions]]></string>
+    <string name="combine_number_and_words"><![CDATA[Combine numbers & words]]></string>
+    <string name="construct_the_correct_sentence">Construct the correct sentence</string>
+    <string name="syntactic_exercise">Syntactic exercise</string>
+    <string name="find_the_correct_sentence">Find the correct sentence</string>
+    <string name="find_the_antonym">Find the antonym</string>
+    <string name="choose_the_correct_sentence">Choose the correct sentence</string>
+    <string name="true_or_false">True or False</string>
+    <string name="find_the_odd_one_out">Find the odd one out</string>
+    <string name="pair_the_title_image_and_text">Pair the title, image and text</string>
+    <string name="there_is_no_more_help">There is no more help. Choose the correct picture!</string>
+    <string name="find_the_correct_picture">Find the correct picture</string>
+    <string name="the_game_was_broken">The game was broken. Please start a new one.</string>
+
+    <string name="fragment1description"></string>
+
+
+    <string-array name="lesson">
+        <item>LESSON</item>
+        <item>Lesson 1</item>
+        <item>Lesson 2</item>
+        <item>Lesson 3</item>
+        <item>Lesson 4</item>
+        <item>Lesson 5</item>
+        <item>Lesson 6</item>
+        <item>Lesson 7</item>
+        <item>Lesson 8</item>
+        <item>Lesson 9</item>
+        <item>Lesson 10</item>
+        <item>Lesson 11</item>
+        <item>Lesson 12</item>
+        <item>Lesson 13</item>
+        <item>Lesson 14</item>
+    </string-array>
+
+    <string-array name="level">
+        <item>LEVEL</item>
+        <item>Basic</item>
+        <item>Advance</item>
+    </string-array>
+
 </resources>

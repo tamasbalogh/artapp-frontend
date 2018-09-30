@@ -38,7 +38,7 @@
         android:id="@+id/fragmentGame8ButtonTrue"
         style="@style/buttonStyle"
         android:layout_marginTop="32dp"
-        android:text="True"
+        android:text="@string/true_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentGame8SentenceTextView" />
@@ -47,7 +47,7 @@
         android:id="@+id/fragmentGame8ButtonFalse"
         style="@style/buttonStyle"
         android:layout_marginTop="12dp"
-        android:text="False"
+        android:text="@string/false_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentGame8ButtonTrue" />

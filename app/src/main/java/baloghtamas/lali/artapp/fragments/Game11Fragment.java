@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,7 +19,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.GameActivity;
+import baloghtamas.lali.artapp.MixedGameActivity;
 import baloghtamas.lali.artapp.R;
 
 public class Game11Fragment extends Fragment {
@@ -34,8 +37,9 @@ public class Game11Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game11,container,false);
-        ((GameActivity)getActivity()).getSupportActionBar().setTitle("Picture description");
+        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.find_the_correct_picture);
         setUp(view);
         return view;
     }
@@ -110,7 +114,7 @@ public class Game11Fragment extends Fragment {
         public void onClick(View view) {
             sentenceCounter++;
             if(sentenceCounter >= sentences.length) {
-                ArtApp.showSnackBar(getActivity().findViewById(R.id.fragmentGame11ConstraintLayout),"There is no more help. Choose a picture!");
+                ArtApp.showSnackBar(getActivity().findViewById(R.id.fragmentGame11ConstraintLayout),getString(R.string.there_is_no_more_help));
             } else {
                 ArtApp.log("Counter:" + sentenceCounter + "/" + sentences.length);
                 ArtApp.log("Sentence: " + sentences[sentenceCounter].toString());
@@ -128,12 +132,27 @@ public class Game11Fragment extends Fragment {
         public void onClick(View view) {
             if (imageCounter == 0 ) {
                 ArtApp.log("Game11Fragment answer is correct.");
-                ((GameActivity) getActivity()).changeFragment(true);
+                ((MixedGameActivity) getActivity()).changeFragment(0,0);
             } else {
                 ArtApp.log("Game11Fragment answer is bad.");
-                ((GameActivity) getActivity()).changeFragment(false);
+                ((MixedGameActivity) getActivity()).changeFragment(0,0);
             }
 
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.information_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuInformation:
+                ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
+        }
+        return true;
+    }
 }

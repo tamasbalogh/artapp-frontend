@@ -1,34 +1,67 @@
-
-<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:id="@+id/fragmentLanguageLinearLayout">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_your_language"
+        android:textSize="17sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:textStyle="bold"
+        />
+
+    <RadioGroup
+        android:id="@+id/fragmentLanguageRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
 
         <RadioButton
-            android:id="@+id/radio_english"
+            android:id="@+id/fragmentLanguageRadioButtonEnglish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="English" />
+            android:text="@string/english"
+            android:textSize="17sp"/>
 
         <RadioButton
-            android:id="@+id/radio_france"
+            android:id="@+id/fragmentLanguageRadioButtonFrance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="France" />
+            android:text="@string/french"
+            android:textSize="17sp"/>
 
         <RadioButton
-            android:id="@+id/radio_germany"
+            android:id="@+id/fragmentLanguageRadioButtonGermany"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="Germany" />
+            android:text="@string/german"
+            android:textSize="17sp"/>
 
         <RadioButton
-            android:id="@+id/radio_finland"
+            android:id="@+id/fragmentLanguageRadioButtonFinland"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="Finland" />
+            android:text="@string/finnish"
+            android:textSize="17sp"/>
     </RadioGroup>
+
+        <Button
+            android:id="@+id/fragmentLanguageButtonChoose"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/buttonStyle"
+            android:text="@string/choose"
+            android:layout_marginBottom="16dp"
+            android:minWidth="150dp"
+            />
+</LinearLayout>

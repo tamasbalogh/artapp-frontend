@@ -1,22 +1,22 @@
 package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.BuildConfig;
-import baloghtamas.lali.artapp.GameActivity;
+import baloghtamas.lali.artapp.MixedGameActivity;
 import baloghtamas.lali.artapp.R;
 
 public class Game6Fragment extends Fragment implements View.OnClickListener {
@@ -26,12 +26,15 @@ public class Game6Fragment extends Fragment implements View.OnClickListener {
     private TextView phenomenon;
     private Button answer1, answer2, answer3;
     private String correctAnswer = "";
+    private boolean answered = false;
+    private boolean correct;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game6,container,false);
-        ((GameActivity)getActivity()).getSupportActionBar().setTitle("Find the antonym");
+        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.find_the_antonym);
         setUp(view);
         return view;
     }
@@ -80,12 +83,55 @@ public class Game6Fragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (correctAnswer.equals(((Button) view).getText().toString())){
-            ArtApp.log("Game6Fragment answer is correct.");
-            ((GameActivity) getActivity()).changeFragment(true);
+
+        answered = true;
+        getActivity().invalidateOptionsMenu();
+
+        if(correctAnswer.equals(((Button) view).getText().toString())){
+            correct = true;
+            view.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
         } else {
-            ArtApp.log("Game6Fragment answer is bad.");
-            ((GameActivity) getActivity()).changeFragment(false);
+            correct = false;
+            view.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_wrong));
+            if(answer1.getText().equals(correctAnswer))
+                answer1.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
+            if(answer2.getText().equals(correctAnswer))
+                answer2.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
+            if(answer3.getText().equals(correctAnswer))
+                answer3.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
         }
+
+        answer1.setClickable(false);
+        answer2.setClickable(false);
+        answer3.setClickable(false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if(answered) {
+            inflater.inflate(R.menu.next_menu, menu);
+        } else {
+            inflater.inflate(R.menu.information_menu, menu);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuInformation:
+                ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
+                break;
+            case R.id.menuNext:
+                if (correct){
+                    ArtApp.log("Game6Fragment answer is correct.");
+                    ((MixedGameActivity) getActivity()).changeFragment(1,0);
+                } else {
+                    ArtApp.log("Game6Fragment answer is bad.");
+                    ((MixedGameActivity) getActivity()).changeFragment(0,1);
+                }
+                break;
+        }
+        return true;
     }
 }

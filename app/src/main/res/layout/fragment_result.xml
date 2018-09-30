@@ -6,31 +6,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/fragmentResultTextView"
+    <android.support.constraint.Guideline
+        android:id="@+id/fragmentResultGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:textSize="30sp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/fragmentResultPieChart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/fragmentResultGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/fragmentResultCorrectAnswerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_rounded_10_bright"
+        android:minHeight="30dp"
+        android:minWidth="230dp"
+        android:paddingLeft="5dp"
+        android:text="Correct answers - "
+        android:textColor="@color/defaultItem"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragmentResultGuideline" />
+
+    <TextView
+        android:id="@+id/fragmentResultWrongAnswerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Wrong answers - "
+        android:paddingLeft="5dp"
+        android:background="@drawable/button_rounded_10"
+        android:minHeight="30dp"
+        android:minWidth="230dp"
+        android:textColor="@color/defaultItem"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragmentResultCorrectAnswerTextView" />
 
     <Button
         android:id="@+id/fragmentResultNewGameButton"
         style="@style/buttonStyle"
-        android:layout_marginBottom="24dp"
-        android:text="new game"
+        android:layout_marginBottom="32dp"
+        android:text="@string/new_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentResultWrongAnswerTextView" />
 
     <Button
         android:id="@+id/fragmentResultHomeButton"
         style="@style/buttonStyle"
-        android:layout_marginTop="12dp"
-        android:text="home"
+        android:layout_marginTop="24dp"
+        android:text="@string/home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentResultNewGameButton" />
