@@ -5,4 +5,6 @@ public interface IPreferencesHelper {
     Language getLanguage();
     boolean getAlreadyOnBoardStatus();
     void setAlreadyOnBoardStatusToTrue();
+    String getCurrentGameType();
+    void setCurrentGameType(String gameType);
 }

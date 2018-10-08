@@ -48,7 +48,6 @@ public class Game10Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game10, container, false);
-        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.pair_the_title_image_and_text);
         setUp(view);
         return view;
     }
@@ -131,7 +130,7 @@ public class Game10Fragment extends Fragment {
             byte[] decodedString = Base64.decode(list.get(imagePointer).getImage(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             image.setImageBitmap(decodedByte);
-            ArtApp.log("image id: " + imagePointer);
+            //ArtApp.log("image id: " + imagePointer);
         }
     };
 
@@ -143,7 +142,7 @@ public class Game10Fragment extends Fragment {
                 titlePointer = getNext(titlePointer);
             }
             title.setText(list.get(titlePointer).getTitle());
-            ArtApp.log("title id: " + titlePointer);
+            //ArtApp.log("title id: " + titlePointer);
         }
     };
 
@@ -155,7 +154,7 @@ public class Game10Fragment extends Fragment {
                 descriptionPointer = getNext(descriptionPointer);
             }
             description.setText(list.get(descriptionPointer).getDescription());
-            ArtApp.log("description id: " + descriptionPointer);
+            //ArtApp.log("description id: " + descriptionPointer);
         }
     };
 
@@ -239,7 +238,6 @@ public class Game10Fragment extends Fragment {
                 }
 
             } else {
-
                 if(titlePointer == imagePointer && titlePointer == descriptionPointer){
                     correctAnswer++;
                     answers[titlePointer]=true;

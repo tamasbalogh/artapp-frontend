@@ -48,7 +48,6 @@ public class Game4Fragment  extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game4,container,false);
-        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.syntactic_exercise);
         setUp(view);
         return view;
     }

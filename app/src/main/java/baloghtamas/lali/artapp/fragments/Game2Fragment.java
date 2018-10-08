@@ -36,7 +36,7 @@ public class Game2Fragment extends Fragment {
     public static String TAG = "Game2Fragment";
 
     private ImageView image;
-    private ListView numberedListVew, answersListView;
+    private ListView numberedListVew, answersListView, resultListView;
     private ArrayList<String> answeresList, defaultList;
     private ArrayList<NumberedListItem> numberedList;
     private ArrayAdapter<String>  answersAdapter;
@@ -52,7 +52,6 @@ public class Game2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game2, container, false);
-        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.combine_number_and_words);
         setUp(view);
         return view;
     }
@@ -64,14 +63,11 @@ public class Game2Fragment extends Fragment {
             image = view.findViewById(R.id.fragmentGame2ImageView);
             numberedListVew = view.findViewById(R.id.fragmentGame2NumberedListView);
             answersListView = view.findViewById(R.id.fragmentGame2AnswersListView);
+            resultListView = view.findViewById(R.id.fragmentGame2ResultListView);
 
             byte[] decodedString = Base64.decode(bundle.getString("image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             image.setImageBitmap(decodedByte);
-
-            /*Resources res = view.getResources();
-            int imageId = res.getIdentifier(bundle.getString("image"), "drawable", BuildConfig.APPLICATION_ID);
-            image.setImageResource(imageId);*/
 
             defaultList = new ArrayList<>(Arrays.asList(bundle.getStringArray("answers")));
             answeresList = new ArrayList<>(Arrays.asList(ArtApp.mixStringArray(bundle.getStringArray("answers"))));
@@ -140,15 +136,17 @@ public class Game2Fragment extends Fragment {
                     }
                 }
 
-                numberedAdapter = new NumberedListAdapter(inflatedView.getContext(),numberedList,colors);
-                numberedListVew.setAdapter(numberedAdapter);
 
-                answersAdapter = new ArrayAdapter<String>(view.getContext(),
-                        android.R.layout.simple_list_item_1, defaultList);
-                answersListView.setAdapter(answersAdapter);
+                numberedAdapter = new NumberedListAdapter(inflatedView.getContext(),numberedList,colors);
+                resultListView.setVisibility(View.VISIBLE);
+                resultListView.setAdapter(numberedAdapter);
+
 
                 answersListView.setOnItemClickListener(null);
+                answersListView.setVisibility(View.GONE);
                 numberedListVew.setOnItemClickListener(null);
+                numberedListVew.setVisibility(View.GONE);
+
             }
         }
     };
@@ -220,9 +218,8 @@ public class Game2Fragment extends Fragment {
             TextView value = (TextView) listItem.findViewById(R.id.rowItemValue);
             value.setText(current.getValue());
             if(colors != null){
-                //value.setBackground(mContext.getResources().getDrawable(colors.get(position)));
+                number.setBackgroundColor(mContext.getResources().getColor(colors.get(position)));
                 value.setBackgroundColor(mContext.getResources().getColor(colors.get(position)));
-                //value.setTextColor(mContext.getResources().getColor(R.color.defaultItem));
             }
 
             return listItem;

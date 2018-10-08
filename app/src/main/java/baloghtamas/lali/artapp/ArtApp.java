@@ -18,7 +18,10 @@ import baloghtamas.lali.artapp.di.DaggerApplicationComponent;
 
 public class ArtApp extends Application {
 
+    public static final String REGULAR_GAME="REGULAR";
+    public static final String MIXED_GAME="MIXED";
     private ApplicationComponent applicationComponent;
+
 
     @Override
     public void onCreate() {

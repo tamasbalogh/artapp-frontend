@@ -13,6 +13,7 @@ public class PreferencesHelper implements IPreferencesHelper {
     public static final String PREF_NAME = "ART_APP_PREFERENCES";
     public static final String PREF_KEY_LANGUAGE = "PREF_KEY_LANGUAGE_STRING";
     public static final String PREF_KEY_ONBOARDING = "PREF_KEY_ONBOARDING";
+    public static final String PREF_KEY_GAMETYPE = "PREF_KEY_GAMETYPE";
 
     SharedPreferences sharedPreferences;
 
@@ -40,5 +41,15 @@ public class PreferencesHelper implements IPreferencesHelper {
     @Override
     public void setAlreadyOnBoardStatusToTrue() {
         sharedPreferences.edit().putBoolean(PREF_KEY_ONBOARDING,true).apply();
+    }
+
+    @Override
+    public String getCurrentGameType() {
+        return sharedPreferences.getString(PREF_KEY_GAMETYPE,"");
+    }
+
+    @Override
+    public void setCurrentGameType(String gameType) {
+        sharedPreferences.edit().putString(PREF_KEY_GAMETYPE,gameType).apply();
     }
 }

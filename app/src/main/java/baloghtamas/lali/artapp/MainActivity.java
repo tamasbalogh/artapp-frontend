@@ -1,5 +1,4 @@
 package baloghtamas.lali.artapp;
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -25,6 +24,8 @@ import baloghtamas.lali.artapp.data.PreferencesHelper;
 import baloghtamas.lali.artapp.fragments.LanguageDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     private boolean doubleBackToExitPressedOnce = false;
     private Button mixed,regular;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(v.getId() == R.id.mainActivityButtonRegular){
-            startActivity(new Intent(this,RegularActivity.class));
+            startActivity(new Intent(this,RegularGameActivity.class));
             //finish();
         }
     }

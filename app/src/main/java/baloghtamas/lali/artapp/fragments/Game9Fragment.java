@@ -43,7 +43,6 @@ public class Game9Fragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game9,container,false);
-        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.find_the_odd_one_out);
         setUp(view);
         return view;
     }

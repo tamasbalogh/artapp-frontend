@@ -37,6 +37,7 @@
     <string name="the_game_was_broken">The game was broken. Please start a new one.</string>
 
     <string name="fragment1description"></string>
+    <string name="result">Result</string>
 
 
     <string-array name="lesson">

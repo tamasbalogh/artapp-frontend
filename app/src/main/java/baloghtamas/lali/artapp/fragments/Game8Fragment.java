@@ -39,7 +39,6 @@ public class Game8Fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game8,container,false);
-        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.true_or_false);
         setUp(view);
         return view;
     }

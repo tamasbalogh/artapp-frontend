@@ -14,7 +14,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragmentGame4guideline"/>
+        app:layout_constraintBottom_toTopOf="@id/fragmentGame4guideline"
+        android:scaleType="fitXY"
+        android:layout_margin="8dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/fragmentGame4guideline"
@@ -29,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         app:alignContent="flex_start"
         app:alignItems="flex_start"
         app:flexWrap="wrap"

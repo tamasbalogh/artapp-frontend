@@ -34,7 +34,6 @@ public class Game6Fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game6,container,false);
-        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.find_the_antonym);
         setUp(view);
         return view;
     }

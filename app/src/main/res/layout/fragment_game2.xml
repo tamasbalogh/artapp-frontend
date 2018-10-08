@@ -12,7 +12,10 @@
         app:layout_constraintBottom_toTopOf="@+id/fragmentGame2guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"
+        android:layout_margin="8dp"
+        />
 
     <android.support.constraint.Guideline
         android:id="@+id/fragmentGame2guideline2"
@@ -32,23 +35,36 @@
         android:id="@+id/fragmentGame2AnswersListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:divider="@color/colorPrimary"
         android:dividerHeight="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fragmentGame2guideline"
-        app:layout_constraintTop_toTopOf="@+id/fragmentGame2guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/fragmentGame2guideline2"
+        />
 
     <ListView
         android:id="@+id/fragmentGame2NumberedListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:divider="@color/colorPrimary"
         android:dividerHeight="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fragmentGame2guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragmentGame2guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/fragmentGame2guideline2"
+        />
+
+    <ListView
+        android:id="@+id/fragmentGame2ResultListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragmentGame2guideline2"
+        android:visibility="gone"/>
+
 </android.support.constraint.ConstraintLayout>

@@ -1,8 +1,12 @@
 package baloghtamas.lali.artapp.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,54 +22,81 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
+import javax.inject.Inject;
+
 import baloghtamas.lali.artapp.ArtApp;
 import baloghtamas.lali.artapp.MixedGameActivity;
 import baloghtamas.lali.artapp.R;
+import baloghtamas.lali.artapp.RegularGameActivity;
+import baloghtamas.lali.artapp.data.PreferencesHelper;
 
 public class Game1Fragment extends Fragment {
 
     public static  String TAG = "Game1Fragment";
 
-    private ListView colorsListView, definitionsListView;
-    private ArrayList<Game1DataModel> defaultList = new ArrayList<>();
-    private ArrayList<Game1DataModel> createdList = new ArrayList<>();
+    private ListView colorsListView, definitionsListView, resultListView;
+    private HashMap<String, String> defaultList = new HashMap<>();
+    private HashMap<String, String> createdList = new HashMap<>();
+
     private String selectedColor, selectedDefinition;
     private int selectedColorPosition, selectedDefinitionPosition;
-    private List<String> colorsList, definitionsList;
+    private ArrayList<String> colorsList, definitionsList;
     private  ArrayAdapter<String> colorsAdapter, definitionsAdapter;
     private View inflatedView;
+
+    private ArrayList<Integer> colors = new ArrayList<>();
     private boolean answered = false;
     private float correctAnswer = 0;
     private float wrongAnswer = 0;
+
+    private boolean isColorSelected = false;
+    private boolean isDefinitionSelected = false;
+
+    @Inject
+    PreferencesHelper preferencesHelper;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game1,container,false);
-        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.combine_colors_and_definitions);
         setUp(view);
         return view;
     }
 
     private void setUp(View view) {
+        ((ArtApp)getActivity().getApplication()).getApplicationComponent().inject(this);
+
         inflatedView = view;
         Bundle bundle = this.getArguments();
         if (bundle != null){
             colorsListView = view.findViewById(R.id.fragmentGame1ColorsListView);
             definitionsListView = view.findViewById(R.id.fragmentGame1DefinitionsListView);
+            resultListView = view.findViewById(R.id.fragmentGame1ResultListView);
 
             colorsList = new ArrayList<>(Arrays.asList(bundle.getStringArray("colors")));
             definitionsList = new ArrayList<>(Arrays.asList(bundle.getStringArray("definitions")));
 
             if(colorsList.size() == definitionsList.size()){
                 for(int i=0; i< colorsList.size(); i++){
-                    defaultList.add(new Game1DataModel(colorsList.get(i), definitionsList.get(i)));
+                    defaultList.put(colorsList.get(i), definitionsList.get(i));
                 }
             } else {
                 ArtApp.log("Game1Fragment - Something went wrong. Size of the color and definition list are different.");
-                ((MixedGameActivity)getActivity()).changeFragment(0,0);
+                if(preferencesHelper.getCurrentGameType().equals(ArtApp.MIXED_GAME)){
+                    ((MixedGameActivity) getActivity()).changeFragment(0,0);
+                }
+
+                if(preferencesHelper.getCurrentGameType().equals(ArtApp.REGULAR_GAME)){
+                    ((RegularGameActivity) getActivity()).changeFragment(0,0);
+                }
+
             }
 
 
@@ -81,7 +112,6 @@ public class Game1Fragment extends Fragment {
 
             colorsListView.setOnItemClickListener(colorOnItemListener);
             definitionsListView.setOnItemClickListener(definitionsOnItemListener);
-
         } else {
             ArtApp.log("Bundle is null in the setUp function of Game1Fragment.");
         }
@@ -113,7 +143,8 @@ public class Game1Fragment extends Fragment {
     AdapterView.OnItemClickListener colorOnItemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            if(selectedColor != null){
+
+            if(isColorSelected){
                 ((TextView) colorsListView.getChildAt(selectedColorPosition)).setBackgroundColor(view.getResources().getColor(R.color.defaultItem));
                 ((TextView) colorsListView.getChildAt(selectedColorPosition)).setTextColor(view.getResources().getColor(android.R.color.black));
                 ((TextView) colorsListView.getChildAt(position)).setBackgroundColor(view.getResources().getColor(R.color.selectedItem));
@@ -121,6 +152,7 @@ public class Game1Fragment extends Fragment {
                 selectedColorPosition = position;
                 selectedColor = colorsListView.getItemAtPosition(position).toString();
             } else {
+                isColorSelected = true;
                 selectedColorPosition = position;
                 selectedColor = colorsListView.getItemAtPosition(position).toString();
                 ((TextView) colorsListView.getChildAt(position)).setBackgroundColor(view.getResources().getColor(R.color.selectedItem));
@@ -128,7 +160,8 @@ public class Game1Fragment extends Fragment {
             }
 
             if(selectedDefinition != null){
-                createdList.add(new Game1DataModel(selectedColor,selectedDefinition));
+
+                createdList.put(selectedColor,selectedDefinition);
                 cleanUpAfterSelections(view);
             }
         }
@@ -137,7 +170,7 @@ public class Game1Fragment extends Fragment {
     AdapterView.OnItemClickListener definitionsOnItemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            if(selectedDefinition != null){
+            if(isDefinitionSelected){
                 ((TextView) definitionsListView.getChildAt(selectedDefinitionPosition)).setBackgroundColor(view.getResources().getColor(R.color.defaultItem));
                 ((TextView) definitionsListView.getChildAt(selectedDefinitionPosition)).setTextColor(view.getResources().getColor(android.R.color.black));
                 ((TextView) definitionsListView.getChildAt(position)).setBackgroundColor(view.getResources().getColor(R.color.selectedItem));
@@ -145,6 +178,7 @@ public class Game1Fragment extends Fragment {
                 selectedDefinitionPosition = position;
                 selectedDefinition = definitionsListView.getItemAtPosition(position).toString();
             } else {
+                isDefinitionSelected = true;
                 selectedDefinitionPosition = position;
                 selectedDefinition = definitionsListView.getItemAtPosition(position).toString();
                 ((TextView) definitionsListView.getChildAt(position)).setBackgroundColor(view.getResources().getColor(R.color.selectedItem));
@@ -152,7 +186,7 @@ public class Game1Fragment extends Fragment {
             }
 
             if(selectedColor != null){
-                createdList.add(new Game1DataModel(selectedColor,selectedDefinition));
+                createdList.put(selectedColor,selectedDefinition);
                 cleanUpAfterSelections(view);
             }
         }
@@ -166,6 +200,8 @@ public class Game1Fragment extends Fragment {
             public void run() {
                 selectedColor = null;
                 selectedDefinition = null;
+                isColorSelected = false;
+                isDefinitionSelected = false;
                 colorsList.remove(selectedColorPosition);
                 definitionsList.remove(selectedDefinitionPosition);
                 colorsAdapter.notifyDataSetChanged();
@@ -186,44 +222,39 @@ public class Game1Fragment extends Fragment {
         answered = true;
         getActivity().invalidateOptionsMenu();
 
+        ArrayList<Game1DataModel> result = new ArrayList<>();
+
         if(defaultList.size() == createdList.size()) {
-            for (int i = 0; i < createdList.size(); i++) {
-                String color = createdList.get(i).getColor();
-                String definition = createdList.get(i).getDefinition();
-                for (int j = 0; j < defaultList.size(); j++) {
-                    if(defaultList.get(i).getColor().equals(color)){
-                        if(defaultList.get(i).getDefinition().equals(definition)){
-                            correctAnswer++;
-                        } else {
-                            wrongAnswer++;
-                        }
-                        break;
-                    }
+
+            for (String color : defaultList.keySet()) {
+
+                result.add(new Game1DataModel(color,defaultList.get(color)));
+                Game1DataModel defaultGame1Object = new Game1DataModel(color,defaultList.get(color));
+                Game1DataModel createdGame1Object = new Game1DataModel(color,createdList.get(color));
+
+                if(defaultGame1Object.equals(createdGame1Object)){
+                    correctAnswer++;
+                    colors.add(android.R.color.holo_green_dark);
+                } else {
+                    wrongAnswer++;
+                    colors.add(android.R.color.holo_red_dark);
                 }
             }
 
-            colorsList = new ArrayList<>();
-            definitionsList = new ArrayList<>();
+            colorsList = new ArrayList<>(defaultList.keySet());
+            definitionsList = new ArrayList<>(defaultList.values());
 
-            for (int i = 0; i < defaultList.size(); i++) {
-                colorsList.add(defaultList.get(i).getColor());
-                definitionsList.add(defaultList.get(i).getDefinition());
-            }
-
-            colorsAdapter = new ArrayAdapter<String>(inflatedView.getContext(),
-                    android.R.layout.simple_list_item_1, colorsList);
-            colorsListView.setAdapter(colorsAdapter);
-
-            definitionsAdapter = new ArrayAdapter<String>(inflatedView.getContext(),
-                    android.R.layout.simple_list_item_1, definitionsList);
-            definitionsListView.setAdapter(definitionsAdapter);
+            ColoredListAdapter adapter = new ColoredListAdapter(inflatedView.getContext(),result,colors);
+            resultListView.setAdapter(adapter);
+            resultListView.setVisibility(View.VISIBLE);
 
             colorsListView.setOnItemClickListener(null);
+            colorsListView.setVisibility(View.INVISIBLE);
             definitionsListView.setOnItemClickListener(null);
+            definitionsListView.setVisibility(View.INVISIBLE);
 
         } else {
             ArtApp.log("Game1Fragment - Something went wrong. Size of the color and definition list are different.");
-            ((MixedGameActivity)getActivity()).changeFragment(0,0);
         }
 
     }
@@ -246,7 +277,13 @@ public class Game1Fragment extends Fragment {
                 ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
                 break;
             case R.id.menuReload:
-                ((MixedGameActivity) getActivity()).reloadFragment();
+                if(preferencesHelper.getCurrentGameType().equals(ArtApp.MIXED_GAME)){
+                    ((MixedGameActivity) getActivity()).reloadFragment();
+                }
+
+                if(preferencesHelper.getCurrentGameType().equals(ArtApp.REGULAR_GAME)){
+                    ((RegularGameActivity) getActivity()).reloadFragment();
+                }
                 break;
             case R.id.menuNext:
                 if (correctAnswer==defaultList.size()){
@@ -261,7 +298,48 @@ public class Game1Fragment extends Fragment {
         return true;
     }
 
-    private class Game1DataModel {
+    class ColoredListAdapter extends ArrayAdapter<Game1DataModel> {
+
+        private Context mContext;
+        private List<Game1DataModel> list;
+        private List<Integer> colors;
+
+        public ColoredListAdapter(@NonNull Context context, @LayoutRes ArrayList<Game1DataModel> list, ArrayList<Integer> colors) {
+            super(context, 0 , list);
+            mContext = context;
+            this.list = list;
+            this.colors = colors;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View listItem = convertView;
+            if(listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.fragment_game1_row_item,parent,false);
+
+            Game1DataModel current = list.get(position);
+
+            TextView color = (TextView) listItem.findViewById(R.id.rowItemColor);
+            color.setText(current.getColor());
+
+
+            TextView definition = (TextView) listItem.findViewById(R.id.rowItemDefinition);
+            definition.setText(current.getDefinition());
+
+            if(colors != null){
+                color.setBackgroundColor(mContext.getResources().getColor(colors.get(position)));
+                definition.setBackgroundColor(mContext.getResources().getColor(colors.get(position)));
+            }
+
+            return listItem;
+        }
+
+
+    }
+
+    class Game1DataModel {
+
         private String color;
         private String definition;
 
@@ -274,8 +352,31 @@ public class Game1Fragment extends Fragment {
             return color;
         }
 
+        public void setColor(String color) {
+            this.color = color;
+        }
+
         public String getDefinition() {
             return definition;
         }
+
+        public void setDefinition(String definition) {
+            this.definition = definition;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Game1DataModel that = (Game1DataModel) o;
+            return Objects.equals(color, that.color) &&
+                    Objects.equals(definition, that.definition);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(color, definition);
+        }
     }
 }
+

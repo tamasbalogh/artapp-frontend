@@ -13,7 +13,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragmentGame8guideline"/>
+        app:layout_constraintBottom_toTopOf="@id/fragmentGame8guideline"
+        android:scaleType="fitXY"
+        android:layout_margin="8dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/fragmentGame8guideline"

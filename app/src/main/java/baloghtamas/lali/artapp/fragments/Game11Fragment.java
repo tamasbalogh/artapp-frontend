@@ -18,6 +18,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Random;
+
 import baloghtamas.lali.artapp.ArtApp;
 import baloghtamas.lali.artapp.MixedGameActivity;
 import baloghtamas.lali.artapp.R;
@@ -30,16 +33,19 @@ public class Game11Fragment extends Fragment {
     private String[]  images, sentences;
     private Button help, choosePicture;
     private int sentenceCounter = 0;
-    private int imageCounter = 0;
+    private int imageCounter = getRandomNumber();
     private TextView helpTextView;
     private StringBuilder stringBuilder = new StringBuilder();
+
+    private boolean answered = false;
+    private float correctAnswer = 0;
+    private float wrongAnswer = 0;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game11,container,false);
-        ((MixedGameActivity)getActivity()).getSupportActionBar().setTitle(R.string.find_the_correct_picture);
         setUp(view);
         return view;
     }
@@ -59,7 +65,7 @@ public class Game11Fragment extends Fragment {
             images = bundle.getStringArray("images");
             sentences = bundle.getStringArray("sentences");
 
-            byte[] decodedString = Base64.decode(bundle.getString(images[imageCounter]), Base64.DEFAULT);
+            byte[] decodedString = Base64.decode(images[imageCounter], Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             image.setImageBitmap(decodedByte);
 
@@ -114,14 +120,11 @@ public class Game11Fragment extends Fragment {
         public void onClick(View view) {
             sentenceCounter++;
             if(sentenceCounter >= sentences.length) {
+                help.setVisibility(View.GONE);
                 ArtApp.showSnackBar(getActivity().findViewById(R.id.fragmentGame11ConstraintLayout),getString(R.string.there_is_no_more_help));
             } else {
-                ArtApp.log("Counter:" + sentenceCounter + "/" + sentences.length);
-                ArtApp.log("Sentence: " + sentences[sentenceCounter].toString());
                 stringBuilder.insert(0,System.getProperty("line.separator"));
                 stringBuilder.insert(0,sentences[sentenceCounter].toString());
-                //stringBuilder.append(System.getProperty("line.separator"));
-                //stringBuilder.append(sentences[sentenceCounter].toString());
                 helpTextView.setText(stringBuilder.toString());
             }
         }
@@ -130,13 +133,21 @@ public class Game11Fragment extends Fragment {
     View.OnClickListener choosePictureClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (imageCounter == 0 ) {
-                ArtApp.log("Game11Fragment answer is correct.");
-                ((MixedGameActivity) getActivity()).changeFragment(0,0);
+            answered = true;
+            getActivity().invalidateOptionsMenu();
+
+            choosePicture.setOnClickListener(null);
+            image.setOnClickListener(null);
+            help.setVisibility(View.GONE);
+
+            if(imageCounter == 0) {
+                choosePicture.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
+                correctAnswer++;
             } else {
-                ArtApp.log("Game11Fragment answer is bad.");
-                ((MixedGameActivity) getActivity()).changeFragment(0,0);
+                choosePicture.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_wrong));
+                wrongAnswer++;
             }
+
 
         }
     };
@@ -144,7 +155,11 @@ public class Game11Fragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.information_menu, menu);
+        if(answered) {
+            inflater.inflate(R.menu.next_menu, menu);
+        } else {
+            inflater.inflate(R.menu.information_menu, menu);
+        }
     }
 
     @Override
@@ -152,7 +167,23 @@ public class Game11Fragment extends Fragment {
         switch(item.getItemId()){
             case R.id.menuInformation:
                 ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
+                break;
+            case R.id.menuNext:
+                if (correctAnswer == sentences.length){
+                    ArtApp.log("Game11Fragment answer is correct.");
+                    ((MixedGameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
+                } else {
+                    ArtApp.log("Game11Fragment answer is bad.");
+                    ((MixedGameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
+                }
+                break;
         }
         return true;
+    }
+
+    //random number between 0 and 2
+    private int getRandomNumber(){
+        Random r = new Random();
+        return r.nextInt(3);
     }
 }
