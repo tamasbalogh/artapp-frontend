@@ -1,6 +1,5 @@
 package baloghtamas.lali.artapp;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -20,6 +19,7 @@ public class ArtApp extends Application {
 
     public static final String REGULAR_GAME="REGULAR";
     public static final String MIXED_GAME="MIXED";
+
     private ApplicationComponent applicationComponent;
 
 
@@ -76,13 +76,13 @@ public class ArtApp extends Application {
                 .show();
     }
 
-    public static void showSnackBar(Activity activity, String message){
+    /*public static void showSnackBar(Activity activity, String message){
         View rootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT);
         View view = snackbar.getView();
         view.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
         snackbar.setActionTextColor(activity.getResources().getColor(R.color.defaultItem))
                 .show();
-    }
+    }*/
 
 }

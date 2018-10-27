@@ -1,7 +1,6 @@
 package baloghtamas.lali.artapp.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.MixedGameActivity;
 import baloghtamas.lali.artapp.R;
 
 public class ResultFragment extends Fragment implements View.OnClickListener {
@@ -54,18 +52,18 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                 //getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
                 break;
-            case R.id.fragmentResultNewGameButton:
-                getActivity().startActivity(new Intent(getActivity(), MixedGameActivity.class));
+            /*case R.id.fragmentResultNewGameButton:
+                getActivity().startActivity(new Intent(getActivity(), GameActivity.class));
                 getActivity().finish();
-                break;
+                break;*/
         }
     }
 
     public void setUp(View view) {
         home = view.findViewById(R.id.fragmentResultHomeButton);
         home.setOnClickListener(this);
-        newGame = view.findViewById(R.id.fragmentResultNewGameButton);
-        newGame.setOnClickListener(this);
+        //newGame = view.findViewById(R.id.fragmentResultNewGameButton);
+        //newGame.setOnClickListener(this);
         correctAnswerTv = view.findViewById(R.id.fragmentResultCorrectAnswerTextView);
         wrongAsnwerTv = view.findViewById(R.id.fragmentResultWrongAnswerTextView);
 

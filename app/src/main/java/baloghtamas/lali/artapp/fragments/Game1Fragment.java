@@ -1,7 +1,9 @@
 package baloghtamas.lali.artapp.fragments;
 
-import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,18 +24,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import javax.inject.Inject;
-
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.MixedGameActivity;
+import baloghtamas.lali.artapp.GameActivity;
 import baloghtamas.lali.artapp.R;
-import baloghtamas.lali.artapp.RegularGameActivity;
-import baloghtamas.lali.artapp.data.PreferencesHelper;
 
 public class Game1Fragment extends Fragment {
 
@@ -57,22 +54,17 @@ public class Game1Fragment extends Fragment {
     private boolean isColorSelected = false;
     private boolean isDefinitionSelected = false;
 
-    @Inject
-    PreferencesHelper preferencesHelper;
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_game1,container,false);
+
         setUp(view);
         return view;
     }
 
     private void setUp(View view) {
-        ((ArtApp)getActivity().getApplication()).getApplicationComponent().inject(this);
-
         inflatedView = view;
         Bundle bundle = this.getArguments();
         if (bundle != null){
@@ -89,14 +81,7 @@ public class Game1Fragment extends Fragment {
                 }
             } else {
                 ArtApp.log("Game1Fragment - Something went wrong. Size of the color and definition list are different.");
-                if(preferencesHelper.getCurrentGameType().equals(ArtApp.MIXED_GAME)){
-                    ((MixedGameActivity) getActivity()).changeFragment(0,0);
-                }
-
-                if(preferencesHelper.getCurrentGameType().equals(ArtApp.REGULAR_GAME)){
-                    ((RegularGameActivity) getActivity()).changeFragment(0,0);
-                }
-
+                ((GameActivity) getActivity()).changeFragment(0,0);
             }
 
 
@@ -274,24 +259,23 @@ public class Game1Fragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menuInformation:
-                ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                DialogFragment dialogFragment = InformationDialogFragment.newInstance(getResources().getString(R.string.fragment1description));
+                dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+                dialogFragment.show(ft, "information");
+
                 break;
             case R.id.menuReload:
-                if(preferencesHelper.getCurrentGameType().equals(ArtApp.MIXED_GAME)){
-                    ((MixedGameActivity) getActivity()).reloadFragment();
-                }
-
-                if(preferencesHelper.getCurrentGameType().equals(ArtApp.REGULAR_GAME)){
-                    ((RegularGameActivity) getActivity()).reloadFragment();
-                }
+                ((GameActivity) getActivity()).reloadFragment();
                 break;
             case R.id.menuNext:
                 if (correctAnswer==defaultList.size()){
                     ArtApp.log("Game1Fragment answer is correct.");
-                    ((MixedGameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
+                    ((GameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
                 } else {
                     ArtApp.log("Game1Fragment answer is bad.");
-                    ((MixedGameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
+                    ((GameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
                 }
                 break;
         }

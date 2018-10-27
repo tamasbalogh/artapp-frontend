@@ -1,9 +1,10 @@
 package baloghtamas.lali.artapp.fragments;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Base64;
@@ -21,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.MixedGameActivity;
+import baloghtamas.lali.artapp.GameActivity;
 import baloghtamas.lali.artapp.R;
 
 public class Game3Fragment extends Fragment implements View.OnClickListener{
@@ -138,15 +139,18 @@ public class Game3Fragment extends Fragment implements View.OnClickListener{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menuInformation:
-                ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                DialogFragment dialogFragment = InformationDialogFragment.newInstance(getResources().getString(R.string.fragment3description));
+                dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+                dialogFragment.show(ft, "information");
                 break;
             case R.id.menuNext:
                 if (correct){
                     ArtApp.log("Game3Fragment answer is correct.");
-                    ((MixedGameActivity) getActivity()).changeFragment(1,0);
+                    ((GameActivity) getActivity()).changeFragment(1,0);
                 } else {
                     ArtApp.log("Game3Fragment answer is bad.");
-                    ((MixedGameActivity) getActivity()).changeFragment(0,1);
+                    ((GameActivity) getActivity()).changeFragment(0,1);
                 }
                 break;
         }

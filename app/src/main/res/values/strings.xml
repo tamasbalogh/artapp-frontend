@@ -21,24 +21,36 @@
     <string name="choose">Choose</string>
     <string name="new_game">New Game</string>
     <string name="home">Home</string>
-
+    <string name="the_game_was_broken">The game was broken. Please start a new one.</string>
+    <string name="result">Result</string>
+    <string name="regular_no_games">The selected language, lesson and level don\'t contain any games.</string>
+    <string name="mixed_no_games">Your selected language doesn\'t contain any games.</string>
     <string name="combine_colors_and_definitions"><![CDATA[Combine colors & definitions]]></string>
     <string name="combine_number_and_words"><![CDATA[Combine numbers & words]]></string>
     <string name="construct_the_correct_sentence">Construct the correct sentence</string>
     <string name="syntactic_exercise">Syntactic exercise</string>
     <string name="find_the_correct_sentence">Find the correct sentence</string>
     <string name="find_the_antonym">Find the antonym</string>
-    <string name="choose_the_correct_sentence">Choose the correct sentence</string>
+    <string name="choose_the_correct_sentence">Choose the correct word</string>
     <string name="true_or_false">True or False</string>
     <string name="find_the_odd_one_out">Find the odd one out</string>
     <string name="pair_the_title_image_and_text">Pair the title, image and text</string>
     <string name="there_is_no_more_help">There is no more help. Choose the correct picture!</string>
     <string name="find_the_correct_picture">Find the correct picture</string>
-    <string name="the_game_was_broken">The game was broken. Please start a new one.</string>
 
-    <string name="fragment1description"></string>
-    <string name="result">Result</string>
 
+    <string name="fragment1description">Pair the left-side words with the right-side sentences! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment2description">Choose the right words based on the numbers on the picture! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment3description">Choose the right word for the sentence! After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment4description">With the given words, create a sentence with the right syntactical order! After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment5description">Based on the picture, choose the right sentence! After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment6description">Choose the opposite word of the given word. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment7description">Based on the picture, choose the right word which is fit into the sentence. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment8description">Based on the picture, you need to choose that the sentence is true or false. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment9description">You need to choose which word is NOT in the picture. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment10description">Pair the titles with the pictures! To change the title, click on the title! To change the picture, click on the picture! To change the description, click on the description! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment11description">Based on the sentences, you need to choose the right picture. To change the picture, click on the picture! With the HELP button, you can get more sentences. You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="information_is_not_available">Information is not available.</string>
 
     <string-array name="lesson">
         <item>LESSON</item>

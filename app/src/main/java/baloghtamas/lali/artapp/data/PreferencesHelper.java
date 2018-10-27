@@ -29,7 +29,6 @@ public class PreferencesHelper implements IPreferencesHelper {
 
     @Override
     public Language getLanguage(){
-        ArtApp.log(sharedPreferences.getString(PREF_KEY_LANGUAGE, "en"));
         return Language.lookupByCode(sharedPreferences.getString(PREF_KEY_LANGUAGE, "en"));
     }
 

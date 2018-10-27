@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         mixed = findViewById(R.id.mainActivityButtonMixed);
         regular = findViewById(R.id.mainActivityButtonRegular);
-
     }
 
     public void startButtonOnClick(View v){
@@ -65,12 +64,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(v.getId() == R.id.mainActivityButtonMixed){
-            startActivityForResult(new Intent(this,MixedGameActivity.class),1);
+            preferencesHelper.setCurrentGameType(ArtApp.MIXED_GAME);
+            startActivityForResult(new Intent(this,GameActivity.class),1);
             //finish();
         }
 
         if(v.getId() == R.id.mainActivityButtonRegular){
-            startActivity(new Intent(this,RegularGameActivity.class));
+            preferencesHelper.setCurrentGameType(ArtApp.REGULAR_GAME);
+            startActivityForResult(new Intent(this,GameActivity.class),1);
             //finish();
         }
     }
@@ -79,11 +80,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //show onfailure message when call onfailure in GameActivity.
         if (requestCode == 1) {
-            if(resultCode == MixedGameActivity.RESULT_CODE_ON_FAILURE){
+            if(resultCode == GameActivity.RESULT_CODE_ON_FAILURE){
                 ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onFailure"));
             }
-            if(resultCode == MixedGameActivity.RESULT_CODE_SAVED_INSTANCE_STATE){
+            if(resultCode == GameActivity.RESULT_CODE_SAVED_INSTANCE_STATE){
                 ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onSavedInstanceState"));
+            }
+            if(resultCode == GameActivity.RESULT_CODE_GAMES_LENGTH_NULL){
+                ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onSuccess"));
             }
         }
     }

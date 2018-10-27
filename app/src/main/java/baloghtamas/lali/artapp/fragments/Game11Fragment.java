@@ -1,6 +1,8 @@
 package baloghtamas.lali.artapp.fragments;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,7 +24,7 @@ import org.json.JSONObject;
 import java.util.Random;
 
 import baloghtamas.lali.artapp.ArtApp;
-import baloghtamas.lali.artapp.MixedGameActivity;
+import baloghtamas.lali.artapp.GameActivity;
 import baloghtamas.lali.artapp.R;
 
 public class Game11Fragment extends Fragment {
@@ -166,15 +168,18 @@ public class Game11Fragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menuInformation:
-                ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout),TAG);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                DialogFragment dialogFragment = InformationDialogFragment.newInstance(getResources().getString(R.string.fragment11description));
+                dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+                dialogFragment.show(ft, "information");
                 break;
             case R.id.menuNext:
                 if (correctAnswer == sentences.length){
                     ArtApp.log("Game11Fragment answer is correct.");
-                    ((MixedGameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
+                    ((GameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
                 } else {
                     ArtApp.log("Game11Fragment answer is bad.");
-                    ((MixedGameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
+                    ((GameActivity) getActivity()).changeFragment(correctAnswer,wrongAnswer);
                 }
                 break;
         }
