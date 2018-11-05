@@ -17,11 +17,11 @@ import baloghtamas.lali.artapp.di.DaggerApplicationComponent;
 
 public class ArtApp extends Application {
 
+    public static final String SERVER_ADDRESS="https://172.20.16.133:9443/ArtApp/";
     public static final String REGULAR_GAME="REGULAR";
     public static final String MIXED_GAME="MIXED";
 
     private ApplicationComponent applicationComponent;
-
 
     @Override
     public void onCreate() {
@@ -33,22 +33,6 @@ public class ArtApp extends Application {
 
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
-    }
-
-    public static String loadJsonObjectFromFile(Context context) {
-        String json = null;
-        try {
-            InputStream is = context.getResources().openRawResource(R.raw.moc_games);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
     }
 
     public static String[] mixStringArray(String[] answers) {
@@ -75,14 +59,5 @@ public class ArtApp extends Application {
         snackbar.setActionTextColor(layout.getResources().getColor(R.color.defaultItem))
                 .show();
     }
-
-    /*public static void showSnackBar(Activity activity, String message){
-        View rootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
-        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        view.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
-        snackbar.setActionTextColor(activity.getResources().getColor(R.color.defaultItem))
-                .show();
-    }*/
 
 }

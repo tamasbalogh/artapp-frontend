@@ -2,6 +2,7 @@ package baloghtamas.lali.artapp;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -16,9 +17,13 @@ import android.widget.Spinner;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -62,9 +67,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
 
         ((ArtApp)getApplication()).getApplicationComponent().inject(this);
+
+        Locale locale = new Locale(preferencesHelper.getLanguage().getCode());
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        setContentView(R.layout.activity_game);
 
         frameLayout = findViewById(R.id.gameActivityFrameLayout);
         progressBar = findViewById(R.id.gameActivityProgressBar);
@@ -73,9 +84,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         if(preferencesHelper.getCurrentGameType().equals(ArtApp.MIXED_GAME)) {
             if(savedInstanceState == null) {
-                final String url = "https://172.20.16.133:9443/ArtApp/mix?language=" + preferencesHelper.getLanguage().getCode();
+                final String url = ArtApp.SERVER_ADDRESS + "mix";
 
-                asyncHttpClient.get(this, url, new JsonHttpResponseHandler(){
+                RequestParams body = new RequestParams();
+                body.add("auth","yTd0Eq6YzDDVQZBL");
+                body.add("language",preferencesHelper.getLanguage().getCode());
+
+                asyncHttpClient.post(this, url, body ,new JsonHttpResponseHandler(){
 
                     @Override
                     public void onStart() {
@@ -101,25 +116,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                             }
 
                             ArtApp.log("Mixed - Games length: " + games.length());
-                            /*for (int i = 0; i < games.length(); i++) {
-                                if(games.isNull(i)) {
-                                    ArtApp.log(i + " is null.");
-                                } else {
-                                    ArtApp.log(i + " - gametype: " + games.getJSONObject(i).getString("gametype"));
-                                }
-                            }*/
-
-                            //ResultFragment teszteléshez
-                            //showResultFragment();
-
-                            //Egyedi fragment teszteléshez
-                            /*for (int i = 0; i < games.length(); i++) {
-                                if(games.getJSONObject(i).getInt("gametype") == 2) {
-                                    showTheProperGameFragment(games.getJSONObject(i).getInt("gametype"), games.getJSONObject(i));
-                                }
-                            }*/
-
-                            //Rendes működéshez törölni az előzőeket
                             showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -310,17 +306,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
 
-            String languageS = "language=" + preferencesHelper.getLanguage().getCode();
-            String lessonS = "lesson=" + lessonValue.split(" ")[1];
-            final String levelS ;
+            final String levelString ;
             if(levelValue.equals(getResources().getStringArray(R.array.level)[1])){
-                levelS = "level=1";
+                levelString = "1";
             } else {
-                levelS = "level=2";
+                levelString = "2";
             }
-            final String url = "https://172.20.16.133:9443/ArtApp/custom?" + languageS + "&" + lessonS + "&" + levelS;
+            final String url = ArtApp.SERVER_ADDRESS + "custom";
 
-            asyncHttpClient.get(this, url, new JsonHttpResponseHandler(){
+            RequestParams body = new RequestParams();
+            body.add("auth","yTd0Eq6YzDDVQZBL");
+            body.add("langauge",preferencesHelper.getLanguage().getCode());
+            body.add("lesson",lessonValue.split(" ")[1]);
+            body.add("level",levelString);
+
+
+            asyncHttpClient.post(this, url, body, new JsonHttpResponseHandler(){
                 @Override
                 public void onStart() {
                     super.onStart();
@@ -350,14 +351,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         }
 
                         ArtApp.log("Regular - Games length: " + games.length());
-                        /*for (int i = 0; i < games.length(); i++) {
-                            if(games.isNull(i)) {
-                                ArtApp.log(i + " is null.");
-                            } else {
-                                ArtApp.log(i + " - gametype: " + games.getJSONObject(i).getString("gametype"));
-                            }
-                        }*/
-
                         showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
                     } catch (JSONException e) {
                         e.printStackTrace();

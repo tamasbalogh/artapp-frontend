@@ -3,10 +3,10 @@
 
     <item
         android:id="@+id/menuLanguage"
-        android:title="Language" />
+        android:title="@string/language" />
 
     <item
         android:id="@+id/menuExit"
-        android:title="Exit" />
+        android:title="@string/exit" />
 
 </menu>

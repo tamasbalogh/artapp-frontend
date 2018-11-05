@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">ArtApp</string>
+    <string name="english">Englanti</string>
+    <string name="french">Ranska</string>
+    <string name="german">Saksa</string>
+    <string name="finnish">Suomi</string>
+    <string name="mixed_game">Laajennettu peli</string>
+    <string name="regular_game">Peruspeli</string>
+    <string name="network_problem">Verkkoon ei saada yhteyttä. Tarkista verkkoasetukset.</string>
+    <string name="server_is_not_available">Palvelimeen ei saada yhteyttä. Yritä myöhemmin uudelleen.</string>
+    <string name="press_back_once_again_to_exit">Paina peruutus-näppäintä vielä kerran lopettaaksesi pelin.</string>
+    <string name="select_lesson">Valitse oppitunti.</string>
+    <string name="select_level">Valitse taso.</string>
+    <string name="start">Aloita</string>
+    <string name="correct">Oikein</string>
+    <string name="choose_picture">Valitse kuva</string>
+    <string name="help">Ohjeet</string>
+    <string name="true_button">Oikein</string>
+    <string name="false_button">Väärin</string>
+    <string name="select_your_language">VALITSE KIELI</string>
+    <string name="choose">Valitse</string>
+    <string name="new_game">Uusi peli</string>
+    <string name="home">Aloitussivu</string>
+    <string name="the_game_was_broken">Peli keskeytyi. Aloita uusi peli.</string>
+    <string name="result">Tulokset</string>
+    <string name="regular_no_games">Valitut kieli, oppitunti ja taso eivät sisällä yhtään peliä.</string>
+    <string name="mixed_no_games">Valitulla kielellä ei löydy yhtään peliä.</string>
+    <string name="combine_colors_and_definitions">Tietoa ei ole saatavilla.</string>
+    <string name="combine_number_and_words">Yhdistä numero ja sana</string>
+    <string name="construct_the_correct_sentence">Muodosta oikea lause</string>
+    <string name="syntactic_exercise">Sanajärjestys-harjoitus</string>
+    <string name="find_the_correct_sentence">Löydä oikea lause</string>
+    <string name="find_the_antonym">Löydä vastakohta</string>
+    <string name="choose_the_correct_sentence">Valitse oikea sana</string>
+    <string name="true_or_false">Oikein vai väärin</string>
+    <string name="find_the_odd_one_out">Mikä ei kuulu joukkoon?</string>
+    <string name="pair_the_title_image_and_text">Yhdistä nimi, kuva ja teksti</string>
+    <string name="there_is_no_more_help">Apua ei ole enää saatavissa. Valitse oikea kuva.</string>
+    <string name="find_the_correct_picture">Löydä oikea kuva</string>
+    <string name="information_is_not_available">Tietoa ei ole saatavilla.</string>
+    <string name="language">Kieli</string>
+    <string name="exit">Poistuminen</string>
+
+
+    <string name="fragment1description">Yhdistä vasemmanpuoleiset sanat oikeanpuoleisiin määritelmiin. Voit aloittaa pelin uudelleen painamalla oikean ylänurkan näppäintä. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment2description">Valitse oikeat sanat kuvan numeroiden perusteella. Voit aloittaa pelin uudelleen painamalla oikean ylänurkan näppäintä. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment3description">Valitse lauseeseen sopiva sana. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment4description">Laita sanat oikeaan järjetykseen ja muodosta lause. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment5description">Yhdistä oikea lause kuvaan. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment6description">Valitse annetun sanan vastakohta. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment7description">Valitse kuvaan sopiva(t) sana(t). Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment8description">Katso kuvaa ja valitse, onko lause oikein vai väärin. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment9description">Valitse mikä asia/esine EI näy kuvassa. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment10description">Yhdistä nimet kuviin. Voit vaihtaa nimeä klikkaamalla sitä. Voit vaihtaa kuvaa klikkaamalla sitä. Voit vaihtaa kuvausta klikkaamalla sitä. Voit aloittaa pelin uudelleen painamalla oikean ylänurkan näppäintä. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+    <string name="fragment11description">Valitse oikea kuva lauseiden perusteella. Voit vaihtaa kuvaa klikkaamalla sitä. OHJEET-näppäimellä saat lisää lauseita. Voit aloittaa pelin uudelleen painamalla oikean ylänurkan näppäintä. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
+
+    <string-array name="lesson">
+        <item>OPPITUNTI</item>
+        <item>Oppitunti 1</item>
+        <item>Oppitunti 2</item>
+        <item>Oppitunti 3</item>
+        <item>Oppitunti 4</item>
+        <item>Oppitunti 5</item>
+        <item>Oppitunti 6</item>
+        <item>Oppitunti 7</item>
+        <item>Oppitunti 8</item>
+        <item>Oppitunti 9</item>
+        <item>Oppitunti 10</item>
+        <item>Oppitunti 11</item>
+        <item>Oppitunti 12</item>
+        <item>Oppitunti 13</item>
+        <item>Oppitunti 14</item>
+    </string-array>
+
+    <string-array name="level">
+        <item>TASO</item>
+        <item>Helppo</item>
+        <item>Vaikea</item>
+    </string-array>
+
+</resources>
