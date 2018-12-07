@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">ArtApp</string>
+    <string name="english">Anglais</string>
+    <string name="french">Français</string>
+    <string name="german">Allemand</string>
+    <string name="finnish">Finnois</string>
+    <string name="mixed_game">Questions au hasard</string>
+    <string name="regular_game">Questions par thème</string>
+    <string name="network_problem">Réseau indisponible. Vérifiez les paramètres du réseau.</string>
+    <string name="server_is_not_available">Le réseau est indisponible. Réessayez plus tard.</string>
+    <string name="press_back_once_again_to_exit">Appuyez sur le bouton retour une nouvelle fois pour sortir!</string>
+    <string name="select_lesson">Sélectionnez une leçon!</string>
+    <string name="select_level">Sélectionnez un niveau!</string>
+    <string name="start">Commencer</string>
+    <string name="correct">Réponse correcte</string>
+    <string name="choose_picture">Choisir une image</string>
+    <string name="help">Aide</string>
+    <string name="true_button">Vrai</string>
+    <string name="false_button">Faux</string>
+    <string name="select_your_language">LANGUE</string>
+    <string name="choose">Choisir </string>
+    <string name="new_game">Nouvelle session</string>
+    <string name="home">Accueil</string>
+
+    <string name="the_game_was_broken">La partie est finie. Commencez en une nouvelle</string>
+    <string name="result">Résultats</string>
+    <string name="regular_no_games">Les langue, leçon et niveaux sélectionnés ne correspondent à aucune session</string>
+    <string name="mixed_no_games">La langue que vous avez sélectionnée ne contient aucun jeu</string>
+
+    <string name="combine_colors_and_definitions">Relier les couleurs et les définitions</string>
+    <string name="combine_number_and_words">Relier les nombres et les mots</string>
+    <string name="construct_the_correct_sentence">Mettre les mots dans le bon ordre</string>
+    <string name="syntactic_exercise">Exercice de syntaxe</string>
+    <string name="find_the_correct_sentence">Trouver la phrase correcte</string>
+    <string name="find_the_antonym">Trouver l'antonyme</string>
+    <string name="choose_the_correct_sentence">Choisir le mot approprié</string>
+    <string name="true_or_false">Vrai faux</string>
+    <string name="find_the_odd_one_out">Trouver l'intrus</string>
+    <string name="pair_the_title_image_and_text">Assembler le titre, l'image et le texte</string>
+    <string name="there_is_no_more_help">Pas d'aide supplémentaire. Trouvez l'image appropriée</string>
+    <string name="find_the_correct_picture">Trouvez l'image appropriée</string>
+    <string name="information_is_not_available">Information indisponible</string>
+    <string name="language">Langue</string>
+    <string name="exit">Sortie</string>
+
+    <string name="terms_and_application">Photos of the artworks are used with the permission of the Turku Art Museum. In the case of public domain artworks, the photos are used via Wikimedia commons.</string>
+
+
+    <string name="fragment1description">Assemblez les mots de la liste de gauche et les définitions à droite. Vous pouvez recommencer la partie en appuyant sur le bouton en haut à droite. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite.</string>
+    <string name="fragment2description">Choisissez les mots correspondant aux numéros sur l'image. Vous pouvez recommencer la partie en appuyant sur le bouton en haut à droite. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
+    <string name="fragment3description">Choisissez le bon mot pour la phrase. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
+    <string name="fragment4description">A partir des mots proposés, composez une phrase grammaticalement correcte. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
+    <string name="fragment5description">Choisissez la phrase qui correspond à l'image. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
+    <string name="fragment6description">Choisissez l'antonyme du mot proposé. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
+    <string name="fragment7description">Regardez l'image et choisissez le mot approprié pour compléter la phrase. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
+    <string name="fragment8description">Regardez l'image et choisissez si la phrase est vraie ou fausse. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
+    <string name="fragment9description">Regardez l'image et choisissez quel mot n'est PAS dans l'image. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
+    <string name="fragment10description">Assemblez les titres avec les images. Pour changer le titre, cliquez dessus. Pour changer l'image, cliquez dessus. Pour changer la description, cliquez dessus.  Vous pouvez recommencer la partie en appuyant sur le bouton en haut à droite. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite.</string>
+    <string name="fragment11description">Lisez les phrases et choisissez l'image appropriée. Pour changer l'image, cliquez dessus. En appuyant sur le bouton "AIDE" vous pouvez obtenir de nouvelles phrases.  Vous pouvez recommencer la partie en appuyant sur le bouton en haut à droite. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite.</string>
+
+    <string-array name="lesson">
+        <item>LEÇON</item>
+        <item>Leçon 1</item>
+        <item>Leçon 2</item>
+        <item>Leçon 3</item>
+        <item>Leçon 4</item>
+        <item>Leçon 5</item>
+        <item>Leçon 6</item>
+        <item>Leçon 7</item>
+        <item>Leçon 8</item>
+        <item>Leçon 9</item>
+        <item>Leçon 10</item>
+        <item>Leçon 11</item>
+        <item>Leçon 12</item>
+        <item>Leçon 13</item>
+        <item>Leçon 14</item>
+    </string-array>
+
+    <string-array name="level">
+        <item>NIVEAU</item>
+        <item>Débutant</item>
+        <item>Avancé</item>
+    </string-array>
+
+</resources>

@@ -4,7 +4,7 @@
     <string name="french">Ranska</string>
     <string name="german">Saksa</string>
     <string name="finnish">Suomi</string>
-    <string name="mixed_game">Laajennettu peli</string>
+    <string name="mixed_game">Satunnaiset kysymykset</string>
     <string name="regular_game">Peruspeli</string>
     <string name="network_problem">Verkkoon ei saada yhteyttä. Tarkista verkkoasetukset.</string>
     <string name="server_is_not_available">Palvelimeen ei saada yhteyttä. Yritä myöhemmin uudelleen.</string>
@@ -25,6 +25,7 @@
     <string name="result">Tulokset</string>
     <string name="regular_no_games">Valitut kieli, oppitunti ja taso eivät sisällä yhtään peliä.</string>
     <string name="mixed_no_games">Valitulla kielellä ei löydy yhtään peliä.</string>
+
     <string name="combine_colors_and_definitions">Tietoa ei ole saatavilla.</string>
     <string name="combine_number_and_words">Yhdistä numero ja sana</string>
     <string name="construct_the_correct_sentence">Muodosta oikea lause</string>
@@ -39,8 +40,9 @@
     <string name="find_the_correct_picture">Löydä oikea kuva</string>
     <string name="information_is_not_available">Tietoa ei ole saatavilla.</string>
     <string name="language">Kieli</string>
-    <string name="exit">Poistuminen</string>
+    <string name="exit">Poistu</string>
 
+    <string name="terms_and_application">Taideteosten kuvien käyttöön on saatu lupa Turun taidemuseolta. Tekijänoikeudettomien (ns. public domain) teosten kuvat ovat Wikimedia commonsista.</string>
 
     <string name="fragment1description">Yhdistä vasemmanpuoleiset sanat oikeanpuoleisiin määritelmiin. Voit aloittaa pelin uudelleen painamalla oikean ylänurkan näppäintä. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>
     <string name="fragment2description">Valitse oikeat sanat kuvan numeroiden perusteella. Voit aloittaa pelin uudelleen painamalla oikean ylänurkan näppäintä. Kun peli on päättynyt, voit aloittaa seuraavan pelin painamalla nuolta oikeassa ylänurkassa.</string>

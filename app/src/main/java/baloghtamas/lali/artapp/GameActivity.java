@@ -107,6 +107,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                         try {
                             games = response.getJSONArray("games");
+                            for (int i = 0; i < games.length(); i++) {
+                                ArtApp.log(i + " - " +games.getJSONObject(i).getString("gametype"));
+                            }
 
                             if (games.length() == 0 ) {
                                 Intent returnIntent = new Intent();
@@ -312,14 +315,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 levelString = "2";
             }
-            final String url = ArtApp.SERVER_ADDRESS + "custom";
+            final String url = ArtApp.SERVER_ADDRESS + "regular";
 
             RequestParams body = new RequestParams();
             body.add("auth","yTd0Eq6YzDDVQZBL");
-            body.add("langauge",preferencesHelper.getLanguage().getCode());
+            body.add("language",preferencesHelper.getLanguage().getCode());
             body.add("lesson",lessonValue.split(" ")[1]);
             body.add("level",levelString);
-
 
             asyncHttpClient.post(this, url, body, new JsonHttpResponseHandler(){
                 @Override
@@ -380,6 +382,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onCancel() {
                     finish();
+
                 }
             });
         }

@@ -40,6 +40,7 @@
     <string name="information_is_not_available">Information is not available.</string>
     <string name="language">Language</string>
     <string name="exit">Exit</string>
+    <string name="terms_and_application">Photos of the artworks are used with the permission of the Turku Art Museum. In the case of public domain artworks, the photos are used via Wikimedia commons.</string>
 
 
     <string name="fragment1description">Pair the left-side words with the right-side sentences! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
@@ -48,7 +49,7 @@
     <string name="fragment4description">With the given words, create a sentence with the right syntactical order! After you finished, the next game can be started with the arrow at right upper corner.</string>
     <string name="fragment5description">Based on the picture, choose the right sentence! After you finished, the next game can be started with the arrow at right upper corner.</string>
     <string name="fragment6description">Choose the opposite word of the given word. After you finished, the next game can be started with the arrow at right upper corner.</string>
-    <string name="fragment7description">Based on the picture, choose the right word which is fit into the sentence. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment7description">Based on the picture, choose the right word which fits into the sentence. After you finished, the next game can be started with the arrow at right upper corner.</string>
     <string name="fragment8description">Based on the picture, you need to choose that the sentence is true or false. After you finished, the next game can be started with the arrow at right upper corner.</string>
     <string name="fragment9description">You need to choose which word is NOT in the picture. After you finished, the next game can be started with the arrow at right upper corner.</string>
     <string name="fragment10description">Pair the titles with the pictures! To change the title, click on the title! To change the picture, click on the picture! To change the description, click on the description! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>

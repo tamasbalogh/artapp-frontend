@@ -1,4 +1,84 @@
 <resources>
-    <string name="mixed_game">Gemischtes Spiel</string>
-    <string name="regular_game">Regulär Spiel</string>
+    <string name="app_name">ArtApp</string>
+    <string name="english">Englisch</string>
+    <string name="french">Französisch</string>
+    <string name="german">Deutsch</string>
+    <string name="finnish">Finnisch</string>
+    <string name="mixed_game">Spiel mit zufälligen Fragen</string>
+    <string name="regular_game">Fragespiel</string>
+    <string name="network_problem">Das Netzwerk ist nicht verfügbar. Bitte überprüfen Sie die Netzwerkeinstellungen.</string>
+    <string name="server_is_not_available">Der Server ist nicht verfügbar. Bitte versuchen Sie es später noch einmal.</string>
+    <string name="press_back_once_again_to_exit">Wählen Sie noch einmal die Zurück-Taste, um zu beenden!</string>
+    <string name="select_lesson">Wählen Sie eine Lektion!</string>
+    <string name="select_level">Wählen Sie ein Niveau!</string>
+    <string name="start">Start</string>
+    <string name="correct">Richtig</string>
+    <string name="choose_picture">Wählen Sie ein Bild</string>
+    <string name="help">Hilfe</string>
+    <string name="true_button">Richtig</string>
+    <string name="false_button">Falsch</string>
+    <string name="select_your_language">SPRACHE</string>
+    <string name="choose">Wählen Sie</string>
+    <string name="new_game">Neues Spiel</string>
+    <string name="home">Home</string>
+    <string name="the_game_was_broken">Das Spiel ist zu Ende. Bitte starten Sie ein neues Spiel</string>
+    <string name="result">Ergebnis</string>
+    <string name="regular_no_games">Ausgewählte Sprache, Lektion und Niveau enthalten keine Spiele</string>
+    <string name="mixed_no_games">Die ausgewählte Sprache enthält keine Spiele</string>
+
+    <string name="combine_colors_and_definitions">Verbinden Sie die Farben und Definitionen</string>
+    <string name="combine_number_and_words">Verbinden Sie die Zahlen und Wörter</string>
+    <string name="construct_the_correct_sentence">Bilden Sie korrekte Sätze</string>
+    <string name="syntactic_exercise">Syntaktische Übung</string>
+    <string name="find_the_correct_sentence">Finden Sie den richtigen Satz</string>
+    <string name="find_the_antonym">Finden Sie das Gegenteil</string>
+    <string name="choose_the_correct_sentence">Wählen Sie das richtige Wort aus</string>
+    <string name="true_or_false">Richtig oder falsch</string>
+    <string name="find_the_odd_one_out">Welcher Begriff passt nicht?</string>
+    <string name="pair_the_title_image_and_text">Finden Sie die richtige Überschrift und den richtigen Text zum Bild!</string>
+    <string name="there_is_no_more_help">Es gibt keine weitere Hilfe. Wählen Sie das richtige Bild!</string>
+    <string name="find_the_correct_picture">Finden Sie das richtige Bild</string>
+    <string name="information_is_not_available">Die Information ist nicht verfügbar</string>
+    <string name="language">Sprache</string>
+    <string name="exit">Exit</string>
+
+    <string name="terms_and_application">Photos of the artworks are used with the permission of the Turku Art Museum. In the case of public domain artworks, the photos are used via Wikimedia commons.</string>
+
+
+    <string name="fragment1description"> </string>
+    <string name="fragment2description"> </string>
+    <string name="fragment3description"> </string>
+    <string name="fragment4description"></string>
+    <string name="fragment5description"></string>
+    <string name="fragment6description"></string>
+    <string name="fragment7description"></string>
+    <string name="fragment8description"></string>
+    <string name="fragment9description"></string>
+    <string name="fragment10description"></string>
+    <string name="fragment11description"></string>
+
+    <string-array name="lesson">
+        <item>LEKTION</item>
+        <item>Lektion 1</item>
+        <item>Lektion 2</item>
+        <item>Lektion 3</item>
+        <item>Lektion 4</item>
+        <item>Lektion 5</item>
+        <item>Lektion 6</item>
+        <item>Lektion 7</item>
+        <item>Lektion 8</item>
+        <item>Lektion 9</item>
+        <item>Lektion 10</item>
+        <item>Lektion 11</item>
+        <item>Lektion 12</item>
+        <item>Lektion 13</item>
+        <item>Lektion 14</item>
+    </string-array>
+
+    <string-array name="level">
+        <item>NIVEAU</item>
+        <item>AnfängerInnen</item>
+        <item>Fortgeschrittene</item>
+    </string-array>
+
 </resources>
