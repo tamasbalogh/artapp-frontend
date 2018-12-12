@@ -28,8 +28,10 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
     public static  String TAG = "Game7Fragment";
     String correctAnswer = "";
     ImageView image;
-    Button answer1, answer2;
+    Button answer1, answer2, answer3;
     TextView sentence;
+    String [] answers;
+
     private boolean answered = false;
     private boolean correct;
 
@@ -52,6 +54,7 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
             answer2 = view.findViewById(R.id.fragmentGame7AnswerButton2);
             answer2.setOnClickListener(this);
 
+
             byte[] decodedString = Base64.decode(bundle.getString("image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             image.setImageBitmap(decodedByte);
@@ -60,10 +63,19 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
             sentence.setText(bundle.getString("sentence"));
 
             correctAnswer = bundle.getStringArray("answers")[0];
-            String [] answers = ArtApp.mixStringArray(bundle.getStringArray("answers"));
+            answers = ArtApp.mixStringArray(bundle.getStringArray("answers"));
+
+            ArtApp.log("length:" + answers.length + ", " + answers.toString());
 
             answer1.setText(answers[0]);
             answer2.setText(answers[1]);
+
+            if(answers.length == 3){
+                answer3 = view.findViewById(R.id.fragmentGame7AnswerButton3);
+                answer3.setVisibility(View.VISIBLE);
+                answer3.setOnClickListener(this);
+                answer3.setText(answers[2]);
+            }
         } else {
             ArtApp.log("Bundle is null in the setUp function of Game7Fragment.");
         }
@@ -99,14 +111,25 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
         } else {
             correct = false;
             view.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_wrong));
-            if(answer1.getText().equals(correctAnswer))
+
+
+            if(answer1.getText().equals(correctAnswer)) {
                 answer1.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
-            if(answer2.getText().equals(correctAnswer))
+            }
+
+            if(answer2.getText().equals(correctAnswer)) {
                 answer2.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
+            }
+
+            if(answers.length == 3 && answer3.getText().equals(correctAnswer)) {
+                answer3.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
+            }
         }
 
         answer1.setClickable(false);
         answer2.setClickable(false);
+        if(answers.length == 3)
+            answer3.setClickable(false);
     }
 
     @Override

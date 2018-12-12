@@ -1,13 +1,9 @@
 package baloghtamas.lali.artapp;
 
 import android.app.Application;
-import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 import baloghtamas.lali.artapp.di.ApplicationComponent;
@@ -17,7 +13,8 @@ import baloghtamas.lali.artapp.di.DaggerApplicationComponent;
 
 public class ArtApp extends Application {
 
-    public static final String SERVER_ADDRESS="https://172.20.16.133:9443/ArtApp/";
+    //public static final String SERVER_ADDRESS="https://172.20.16.133:9443/ArtApp/";
+    public static final String SERVER_ADDRESS="https://imhotep.nyme.hu:9443/ArtApp/";
     public static final String REGULAR_GAME="REGULAR";
     public static final String MIXED_GAME="MIXED";
 

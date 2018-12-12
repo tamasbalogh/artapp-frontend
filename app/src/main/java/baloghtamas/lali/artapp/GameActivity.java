@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -320,8 +321,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             RequestParams body = new RequestParams();
             body.add("auth","yTd0Eq6YzDDVQZBL");
             body.add("language",preferencesHelper.getLanguage().getCode());
-            body.add("lesson",lessonValue.split(" ")[1]);
+            if(preferencesHelper.getLanguage().getCode().equals("en")){
+                HashMap<String, Integer> lessons = new HashMap<>();
+                for (int i = 0; i < getResources().getStringArray(R.array.lesson).length; i++) {
+                    lessons.put(getResources().getStringArray(R.array.lesson)[i],(i));
+                }
+                body.add("lesson",lessons.get(lessonValue).toString());
+            } else {
+                body.add("lesson",lessonValue.split(" ")[1]);
+            }
             body.add("level",levelString);
+
+
 
             asyncHttpClient.post(this, url, body, new JsonHttpResponseHandler(){
                 @Override

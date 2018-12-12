@@ -45,17 +45,17 @@
     <string name="terms_and_application">Photos of the artworks are used with the permission of the Turku Art Museum. In the case of public domain artworks, the photos are used via Wikimedia commons.</string>
 
 
-    <string name="fragment1description"> </string>
-    <string name="fragment2description"> </string>
-    <string name="fragment3description"> </string>
-    <string name="fragment4description"></string>
-    <string name="fragment5description"></string>
-    <string name="fragment6description"></string>
-    <string name="fragment7description"></string>
-    <string name="fragment8description"></string>
-    <string name="fragment9description"></string>
-    <string name="fragment10description"></string>
-    <string name="fragment11description"></string>
+    <string name="fragment1description">Pair the left-side words with the right-side sentences! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment2description">Choose the right words based on the numbers on the picture! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment3description">Choose the right word for the sentence! After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment4description">With the given words, create a sentence with the right syntactical order! After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment5description">Based on the picture, choose the right sentence! After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment6description">Choose the opposite word of the given word. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment7description">Based on the picture, choose the right word which fits into the sentence. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment8description">Based on the picture, you need to choose that the sentence is true or false. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment9description">You need to choose which word is NOT in the picture. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment10description">Pair the titles with the pictures! To change the title, click on the title! To change the picture, click on the picture! To change the description, click on the description! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
+    <string name="fragment11description">Based on the sentences, you need to choose the right picture. To change the picture, click on the picture! With the HELP button, you can get more sentences. You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
 
     <string-array name="lesson">
         <item>LEKTION</item>

@@ -9,7 +9,7 @@
     <string name="network_problem">The Network is not available. Please check your network settings.</string>
     <string name="server_is_not_available">The server is not available. Please try again later.</string>
     <string name="press_back_once_again_to_exit">Press back button once again to exit!</string>
-    <string name="select_lesson">Select lesson!</string>
+    <string name="select_lesson">Select phenomena!</string>
     <string name="select_level">Select level!</string>
     <string name="start">Start</string>
     <string name="correct">Correct</string>
@@ -56,21 +56,14 @@
     <string name="fragment11description">Based on the sentences, you need to choose the right picture. To change the picture, click on the picture! With the HELP button, you can get more sentences. You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
 
     <string-array name="lesson">
-        <item>LESSON</item>
-        <item>Lesson 1</item>
-        <item>Lesson 2</item>
-        <item>Lesson 3</item>
-        <item>Lesson 4</item>
-        <item>Lesson 5</item>
-        <item>Lesson 6</item>
-        <item>Lesson 7</item>
-        <item>Lesson 8</item>
-        <item>Lesson 9</item>
-        <item>Lesson 10</item>
-        <item>Lesson 11</item>
-        <item>Lesson 12</item>
-        <item>Lesson 13</item>
-        <item>Lesson 14</item>
+        <item>PHENOMENA</item>
+        <item>Food</item>
+        <item>People</item>
+        <item>Leisure Time</item>
+        <item>Interior</item>
+        <item>Nature</item>
+        <item>City and Architecture</item>
+        <item>Stories and Myths</item>
     </string-array>
 
     <string-array name="level">

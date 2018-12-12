@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -24,8 +25,6 @@ import baloghtamas.lali.artapp.data.PreferencesHelper;
 import baloghtamas.lali.artapp.fragments.LanguageDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-
 
     private boolean doubleBackToExitPressedOnce = false;
     private Button mixed,regular;
@@ -52,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         setContentView(R.layout.activity_main);
+
+        TextView terms = findViewById(R.id.terms);
+
+        if( preferencesHelper.getLanguage().getCode().equals("en") ||
+                preferencesHelper.getLanguage().getCode().equals("fi")){
+            terms.setVisibility(View.VISIBLE);
+        } else {
+            terms.setVisibility(View.GONE);
+        }
 
         mixed = findViewById(R.id.mainActivityButtonMixed);
         regular = findViewById(R.id.mainActivityButtonRegular);
