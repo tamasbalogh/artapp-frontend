@@ -112,7 +112,6 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
             correct = false;
             view.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_wrong));
 
-
             if(answer1.getText().equals(correctAnswer)) {
                 answer1.setBackground(getResources().getDrawable(R.drawable.button_rounded_25_correct));
             }
