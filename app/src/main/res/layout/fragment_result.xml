@@ -32,7 +32,7 @@
         android:minHeight="30dp"
         android:minWidth="230dp"
         android:paddingLeft="5dp"
-        android:text="Correct answers - "
+        android:text="@string/correct_answers"
         android:textColor="@color/defaultItem"
         android:textSize="20sp"
         android:textAlignment="center"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Wrong answers - "
+        android:text="@string/wrong_answers"
         android:paddingLeft="5dp"
         android:background="@drawable/button_rounded_10"
         android:minHeight="30dp"
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragmentResultCorrectAnswerTextView" />
 
-    <!--Button
+    <Button
         android:id="@+id/fragmentResultNewGameButton"
         style="@style/buttonStyle"
         android:layout_marginBottom="32dp"
@@ -65,16 +65,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentResultWrongAnswerTextView" /-->
+        app:layout_constraintTop_toBottomOf="@+id/fragmentResultWrongAnswerTextView" />
 
     <Button
         android:id="@+id/fragmentResultHomeButton"
         style="@style/buttonStyle"
         android:text="@string/home"
-        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragmentResultCorrectAnswerTextView"
+        app:layout_constraintTop_toBottomOf="@id/fragmentResultNewGameButton"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

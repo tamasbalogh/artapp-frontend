@@ -13,8 +13,7 @@ import baloghtamas.lali.artapp.di.DaggerApplicationComponent;
 
 public class ArtApp extends Application {
 
-    //public static final String SERVER_ADDRESS="https://172.20.16.133:9443/ArtApp/";
-    public static final String SERVER_ADDRESS="https://imhotep.nyme.hu:9443/ArtApp/";
+    public static final String SERVER_ADDRESS="http://imhotep.nyme.hu:9443/ArtApp/";
     public static final String REGULAR_GAME="REGULAR";
     public static final String MIXED_GAME="MIXED";
 
@@ -50,6 +49,14 @@ public class ArtApp extends Application {
     }
 
     public static void showSnackBar(View layout, String text) {
+        Snackbar snackbar = Snackbar.make(layout, text, Snackbar.LENGTH_SHORT);
+        View view = snackbar.getView();
+        view.setBackgroundColor(layout.getResources().getColor(R.color.colorPrimary));
+        snackbar.setActionTextColor(layout.getResources().getColor(R.color.defaultItem))
+                .show();
+    }
+
+    public static void showSnackBarLong(View layout, String text) {
         Snackbar snackbar = Snackbar.make(layout, text, Snackbar.LENGTH_SHORT);
         View view = snackbar.getView();
         view.setBackgroundColor(layout.getResources().getColor(R.color.colorPrimary));

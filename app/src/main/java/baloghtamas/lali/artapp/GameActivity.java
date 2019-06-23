@@ -53,7 +53,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     PreferencesHelper preferencesHelper;
 
     private boolean doubleBackToExitPressedOnce = false;
-    private AsyncHttpClient asyncHttpClient = new AsyncHttpClient(true,80,9443);
+    //private AsyncHttpClient asyncHttpClient = new AsyncHttpClient(true,80,9443);
+    private AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
     private int fragmentCounter = 0;
     private float correctAnswerCounter = 0;
     private float wrongAnswerCounter = 0;
@@ -108,9 +109,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                         try {
                             games = response.getJSONArray("games");
-                            for (int i = 0; i < games.length(); i++) {
+                            /*for (int i = 0; i < games.length(); i++) {
                                 ArtApp.log(i + " - " +games.getJSONObject(i).getString("gametype"));
-                            }
+                            }*/
 
                             if (games.length() == 0 ) {
                                 Intent returnIntent = new Intent();
@@ -119,8 +120,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                                 finish();
                             }
 
-                            ArtApp.log("Mixed - Games length: " + games.length());
+                            //ArtApp.log("Mixed - Games length: " + games.length());
+
+
+                            //Tesztelés
+                            /*for (int i = 0; i < games.length(); i++) {
+                                if(games.getJSONObject(i).getInt("gametype") == 2)
+                                    showTheProperGameFragment(games.getJSONObject(i).getInt("gametype"), games.getJSONObject(i));
+                            }*/
+
+                            //Normal működés
                             showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
+
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -164,25 +177,27 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         if(preferencesHelper.getCurrentGameType().equals(ArtApp.REGULAR_GAME)) {
 
-            lesson = findViewById(R.id.gameActivityLessonSpinner);
-            lesson.setVisibility(View.VISIBLE);
-            level = findViewById(R.id.gameActivityLevelSpinner);
-            level.setVisibility(View.VISIBLE);
-            start = findViewById(R.id.gameActivityStartButton);
-            start.setVisibility(View.VISIBLE);
+                lesson = findViewById(R.id.gameActivityLessonSpinner);
+                lesson.setVisibility(View.VISIBLE);
+                level = findViewById(R.id.gameActivityLevelSpinner);
+                level.setVisibility(View.VISIBLE);
+                start = findViewById(R.id.gameActivityStartButton);
+                start.setVisibility(View.VISIBLE);
 
+                String lessonArray[] = getResources().getStringArray(R.array.lesson);
+                ArrayAdapter<String> lessonArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, lessonArray);
+                lessonArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                lesson.setAdapter(lessonArrayAdapter);
 
-            String lessonArray[] = getResources().getStringArray(R.array.lesson);
-            ArrayAdapter<String> lessonArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, lessonArray);
-            lessonArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            lesson.setAdapter(lessonArrayAdapter);
+                String levelArray[] = getResources().getStringArray(R.array.level);
+                ArrayAdapter<String> levelArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, levelArray);
+                levelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                level.setAdapter(levelArrayAdapter);
 
-            String levelArray[] = getResources().getStringArray(R.array.level);
-            ArrayAdapter<String> levelArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, levelArray);
-            levelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            level.setAdapter(levelArrayAdapter);
+                lesson.setSelection(preferencesHelper.getSelectedLesson());
+                level.setSelection(preferencesHelper.getSelectedLevel());
 
-            start.setOnClickListener(this);
+                start.setOnClickListener(this);
         }
 
     }
@@ -300,6 +315,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             String lessonValue = lesson.getSelectedItem().toString();
             String levelValue = level.getSelectedItem().toString();
 
+            preferencesHelper.setSelectedLesson(lesson.getSelectedItemPosition());
+            preferencesHelper.setSelectedLevel(level.getSelectedItemPosition());
+
             if (lessonValue.equals(getResources().getStringArray(R.array.lesson)[0])){
                 ArtApp.showSnackBar(findViewById(R.id.gameActivityConstraintLayout),getString(R.string.select_lesson));
                 return;
@@ -333,7 +351,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             body.add("level",levelString);
 
 
-
             asyncHttpClient.post(this, url, body, new JsonHttpResponseHandler(){
                 @Override
                 public void onStart() {
@@ -363,7 +380,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                             finish();
                         }
 
-                        ArtApp.log("Regular - Games length: " + games.length());
                         showTheProperGameFragment(games.getJSONObject(fragmentCounter).getInt("gametype"), games.getJSONObject(fragmentCounter));
                     } catch (JSONException e) {
                         e.printStackTrace();

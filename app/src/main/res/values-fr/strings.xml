@@ -42,9 +42,10 @@
     <string name="information_is_not_available">Information indisponible</string>
     <string name="language">Langue</string>
     <string name="exit">Sortie</string>
-
     <string name="terms_and_application">Photos of the artworks are used with the permission of the Turku Art Museum. In the case of public domain artworks, the photos are used via Wikimedia commons.</string>
 
+    <string name="correct_answers">Réponses correctes - </string>
+    <string name="wrong_answers">Réponses incorrectes - </string>
 
     <string name="fragment1description">Assemblez les mots de la liste de gauche et les définitions à droite. Vous pouvez recommencer la partie en appuyant sur le bouton en haut à droite. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite.</string>
     <string name="fragment2description">Choisissez les mots correspondant aux numéros sur l'image. Vous pouvez recommencer la partie en appuyant sur le bouton en haut à droite. Quand vous avez fini, vous pouvez commencer la partie suivante en appuyant sur la flèche en haut à droite. </string>
@@ -60,8 +61,8 @@
 
     <string-array name="lesson">
         <item>LEÇON</item>
-        <item>Leçon 1</item>
-        <item>Leçon 2</item>
+        <item>Natures mortes et alimentation</item>
+        <item>Maison / intérieurs - Vie domestique</item>
         <item>Leçon 3</item>
         <item>Leçon 4</item>
         <item>Leçon 5</item>

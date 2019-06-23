@@ -11,7 +11,7 @@
         android:id="@+id/mainActivityLogoImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,37 +20,39 @@
     <Button
         android:id="@+id/mainActivityButtonMixed"
         style="@style/buttonStyle"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
         android:onClick="startButtonOnClick"
         android:text="@string/mixed_game"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mainActivityButtonRegular"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/mainActivityButtonRegular"
         style="@style/buttonStyle"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="48dp"
         android:onClick="startButtonOnClick"
         android:text="@string/regular_game"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainActivityButtonMixed" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/terms"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:fontFamily="@font/roboto_light"
         android:text="@string/terms_and_application"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/mainActivityButtonMixed"
         app:layout_constraintEnd_toEndOf="@+id/mainActivityButtonRegular"
-        app:layout_constraintStart_toStartOf="@+id/mainActivityButtonRegular" />
+        app:layout_constraintStart_toStartOf="@+id/mainActivityButtonRegular"
+        android:visibility="gone"
+        />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ((ArtApp)getApplication()).getApplicationComponent().inject(this);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if( preferencesHelper.getAlreadyOnBoardStatus() == false) {
             preferencesHelper.setAlreadyOnBoardStatusToTrue();
@@ -44,11 +46,12 @@ public class MainActivity extends AppCompatActivity {
             DialogFragment newFragment = new LanguageDialogFragment();
             newFragment.show(ft, "dialog");
         }
-
+        
         Locale locale = new Locale(preferencesHelper.getLanguage().getCode());
         Configuration config = getBaseContext().getResources().getConfiguration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
 
         setContentView(R.layout.activity_main);
 
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startButtonOnClick(View v){
         if(!isNetworkAvailable()){
-            ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout), getString(R.string.network_problem));
+            ArtApp.showSnackBarLong(findViewById(R.id.mainActivityConstraintLayout), getString(R.string.network_problem));
             return;
         }
 
@@ -79,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(v.getId() == R.id.mainActivityButtonRegular){
             preferencesHelper.setCurrentGameType(ArtApp.REGULAR_GAME);
+            preferencesHelper.setSelectedLevel(0);
+            preferencesHelper.setSelectedLesson(0);
             startActivityForResult(new Intent(this,GameActivity.class),1);
             //finish();
         }
@@ -89,13 +94,13 @@ public class MainActivity extends AppCompatActivity {
         //show onfailure message when call onfailure in GameActivity.
         if (requestCode == 1) {
             if(resultCode == GameActivity.RESULT_CODE_ON_FAILURE){
-                ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onFailure"));
+                ArtApp.showSnackBarLong(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onFailure"));
             }
             if(resultCode == GameActivity.RESULT_CODE_SAVED_INSTANCE_STATE){
-                ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onSavedInstanceState"));
+                ArtApp.showSnackBarLong(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onSavedInstanceState"));
             }
             if(resultCode == GameActivity.RESULT_CODE_GAMES_LENGTH_NULL){
-                ArtApp.showSnackBar(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onSuccess"));
+                ArtApp.showSnackBarLong(findViewById(R.id.mainActivityConstraintLayout),data.getStringExtra("onSuccess"));
             }
         }
     }

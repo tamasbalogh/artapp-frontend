@@ -41,9 +41,10 @@
     <string name="information_is_not_available">Die Information ist nicht verfügbar</string>
     <string name="language">Sprache</string>
     <string name="exit">Exit</string>
-
     <string name="terms_and_application">Photos of the artworks are used with the permission of the Turku Art Museum. In the case of public domain artworks, the photos are used via Wikimedia commons.</string>
 
+    <string name="correct_answers">Richtige Antworten -</string>
+    <string name="wrong_answers">Falsche Antworten -</string>
 
     <string name="fragment1description">Verbinden sie die Wörter der linken Seite mit den Beschreibungen der rechten Seite! Sie können das Spiel mit der Taste in der rechten oberen Ecke neu starten. Wenn sie fertig sind, können sie mit der Pfeiltaste in der rechten oberen Ecke das nächste Spiel beginnen.</string>
     <string name="fragment2description">Wählen sie das Wort aus, das zu den Nummern auf dem Bild passt! Sie können das Spiel mit der Taste in der rechten oberen Ecke neu starten. Wenn sie fertig sind, können sie mit der Pfeiltaste in der rechten oberen Ecke das nächste Spiel beginnen.</string>

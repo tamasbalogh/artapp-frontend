@@ -28,7 +28,7 @@ public class InformationDialogFragment extends DialogFragment {
             inf.setText(bundle.getString("information"));
         } else {
             dismiss();
-            ArtApp.showSnackBar(getActivity().findViewById(R.id.gameActivityConstraintLayout), getString(R.string.information_is_not_available));
+            ArtApp.showSnackBarLong(getActivity().findViewById(R.id.gameActivityConstraintLayout), getString(R.string.information_is_not_available));
         }
         return view;
     }

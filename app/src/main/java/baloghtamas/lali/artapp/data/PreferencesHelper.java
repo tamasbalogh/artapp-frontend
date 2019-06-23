@@ -14,6 +14,8 @@ public class PreferencesHelper implements IPreferencesHelper {
     public static final String PREF_KEY_LANGUAGE = "PREF_KEY_LANGUAGE_STRING";
     public static final String PREF_KEY_ONBOARDING = "PREF_KEY_ONBOARDING";
     public static final String PREF_KEY_GAMETYPE = "PREF_KEY_GAMETYPE";
+    public static final String PREF_KEY_SELECTED_LESSON = "PREF_KEY_SELECTED_LESSON";
+    public static final String PREF_KEY_SELECTED_LEVEL = "PREF_KEY_SELECTED_LEVEL";
 
     SharedPreferences sharedPreferences;
 
@@ -50,5 +52,25 @@ public class PreferencesHelper implements IPreferencesHelper {
     @Override
     public void setCurrentGameType(String gameType) {
         sharedPreferences.edit().putString(PREF_KEY_GAMETYPE,gameType).apply();
+    }
+
+    @Override
+    public int getSelectedLesson() {
+        return sharedPreferences.getInt(PREF_KEY_SELECTED_LESSON,0);
+    }
+
+    @Override
+    public void setSelectedLesson(int lesson) {
+        sharedPreferences.edit().putInt(PREF_KEY_SELECTED_LESSON,lesson).apply();
+    }
+
+    @Override
+    public int getSelectedLevel() {
+        return sharedPreferences.getInt(PREF_KEY_SELECTED_LEVEL,0);
+    }
+
+    @Override
+    public void setSelectedLevel(int level) {
+        sharedPreferences.edit().putInt(PREF_KEY_SELECTED_LEVEL,level).apply();
     }
 }

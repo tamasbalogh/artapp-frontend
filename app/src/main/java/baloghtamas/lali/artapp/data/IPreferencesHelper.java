@@ -7,4 +7,9 @@ public interface IPreferencesHelper {
     void setAlreadyOnBoardStatusToTrue();
     String getCurrentGameType();
     void setCurrentGameType(String gameType);
+    int getSelectedLesson();
+    void setSelectedLesson(int lesson);
+    int getSelectedLevel();
+    void setSelectedLevel(int level);
+
 }

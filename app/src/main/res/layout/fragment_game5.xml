@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@id/fragmentGame5guideline"/>
 

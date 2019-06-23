@@ -65,8 +65,6 @@ public class Game7Fragment extends Fragment implements View.OnClickListener {
             correctAnswer = bundle.getStringArray("answers")[0];
             answers = ArtApp.mixStringArray(bundle.getStringArray("answers"));
 
-            ArtApp.log("length:" + answers.length + ", " + answers.toString());
-
             answer1.setText(answers[0]);
             answer2.setText(answers[1]);
 

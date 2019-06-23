@@ -27,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import baloghtamas.lali.artapp.ArtApp;
@@ -39,12 +41,13 @@ public class Game2Fragment extends Fragment {
 
     private ImageView image;
     private ListView numberedListVew, answersListView, resultListView;
-    private ArrayList<String> answeresList, defaultList;
-    private ArrayList<NumberedListItem> numberedList;
-    private ArrayAdapter<String>  answersAdapter;
-    private NumberedListAdapter numberedAdapter;
+    private ArrayList<String> defaultList;
+    private ArrayList<Value> answeresList, numberesList;
+    private CustomAdapter answersAdapter, numberesAdapter;
+    private HashMap<String , String> answersHashMap = new HashMap<>();
+
     private View inflatedView;
-    private int numberedListPosition = 0;
+    private ArrayList<Integer> colors = new ArrayList<>();
     private boolean answered = false;
     private float correctAnswer = 0;
     private float wrongAnswer = 0;
@@ -72,22 +75,27 @@ public class Game2Fragment extends Fragment {
             image.setImageBitmap(decodedByte);
 
             defaultList = new ArrayList<>(Arrays.asList(bundle.getStringArray("answers")));
-            answeresList = new ArrayList<>(Arrays.asList(ArtApp.mixStringArray(bundle.getStringArray("answers"))));
-            numberedList = new ArrayList<>();
+            numberesList = new ArrayList<>();
+            answeresList = new ArrayList<>();
 
-            for (int i = 0; i < answeresList.size(); i++) {
-                String key = (i+1) + ".";
-                numberedList.add(new NumberedListItem(key, null));
+            for (String s : Arrays.asList(ArtApp.mixStringArray(bundle.getStringArray("answers")))) {
+                answeresList.add(new Value(s,false));
             }
 
-            answersAdapter = new ArrayAdapter<String>(view.getContext(),
-                    android.R.layout.simple_list_item_1, answeresList);
+            for (int i = 0; i < answeresList.size(); i++) {
+                int key =  i + 1;
+                numberesList.add(new Value(Integer.toString(key),false));
+            }
+
+            answersAdapter = new CustomAdapter(view.getContext(),R.layout.listitem_value,answeresList);
             answersListView.setAdapter(answersAdapter);
 
-            numberedAdapter = new NumberedListAdapter(view.getContext(), numberedList);
-            numberedListVew.setAdapter(numberedAdapter);
+            numberesAdapter = new CustomAdapter(view.getContext(),R.layout.listitem_number, numberesList);
+            numberedListVew.setAdapter(numberesAdapter);
 
             answersListView.setOnItemClickListener(answersOnItemClickListener);
+            numberedListVew.setOnItemClickListener(numbersOnItemClickListener);
+
         } else {
             ArtApp.log("Bundle is null in the setUp function of Game2Fragment.");
         }
@@ -113,50 +121,64 @@ public class Game2Fragment extends Fragment {
     AdapterView.OnItemClickListener answersOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            String value = answersListView.getItemAtPosition(position).toString();
-            numberedList.set(numberedListPosition, new NumberedListItem(numberedList.get(numberedListPosition).getNumber(),value));
-            answeresList.remove(position);
-            answersAdapter.notifyDataSetChanged();
-            numberedAdapter.notifyDataSetChanged();
-            numberedListPosition++;
 
-            if(answeresList.isEmpty()){
-                answered = true;
-                getActivity().invalidateOptionsMenu();
-                ArrayList<Integer> colors = new ArrayList<>();
+            answeresList.get(position).isSelected = true;
 
-                for (int i = 0; i < defaultList.size(); i++) {
+            if(getTrueIndex(numberesList) != -1 ){
+                answersHashMap.put(numberesList.get(getTrueIndex(numberesList)).value,answeresList.get(getTrueIndex(answeresList)).value);
 
-                    if(defaultList.get(i).toString().equals(numberedList.get(i).getValue())){
-                        correctAnswer++;
-                        //colors.add(R.drawable.button_rounded_10_correct);
-                        colors.add(android.R.color.holo_green_dark);
-                    } else {
-                        wrongAnswer++;
-                        //colors.add(R.drawable.button_rounded_10_wrong);
-                        colors.add(android.R.color.holo_red_dark);
-                    }
+                answeresList.remove(getTrueIndex(answeresList));
+                answersAdapter.notifyDataSetChanged();
+
+                numberesList.remove(getTrueIndex(numberesList));
+                numberesAdapter.notifyDataSetChanged();
+
+                if(numberesList.isEmpty() && answeresList.isEmpty()){
+                    checkResult();
                 }
-
-
-                numberedAdapter = new NumberedListAdapter(inflatedView.getContext(),numberedList,colors);
-                resultListView.setVisibility(View.VISIBLE);
-                resultListView.setAdapter(numberedAdapter);
-
-
-                answersListView.setOnItemClickListener(null);
-                answersListView.setVisibility(View.GONE);
-                numberedListVew.setOnItemClickListener(null);
-                numberedListVew.setVisibility(View.GONE);
-
             }
+
+            if(getTrueIndex(answeresList) != -1){
+                answeresList = allFalse(answeresList);
+                answeresList.get(position).isSelected = true;
+                answersAdapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+    AdapterView.OnItemClickListener numbersOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+            numberesList.get(position).isSelected = true;
+
+            if(getTrueIndex(answeresList) != -1 ){
+                answersHashMap.put(numberesList.get(getTrueIndex(numberesList)).value,answeresList.get(getTrueIndex(answeresList)).value);
+
+                answeresList.remove(getTrueIndex(answeresList));
+                answersAdapter.notifyDataSetChanged();
+
+                numberesList.remove(getTrueIndex(numberesList));
+                numberesAdapter.notifyDataSetChanged();
+
+                if(numberesList.isEmpty() && answeresList.isEmpty()){
+                    checkResult();
+                }
+            }
+
+            if(getTrueIndex(numberesList) != -1){
+                numberesList = allFalse(numberesList);
+                numberesList.get(position).isSelected = true;
+                numberesAdapter.notifyDataSetChanged();
+            }
+
         }
     };
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if(answered) {
+        if (answered) {
             inflater.inflate(R.menu.next_menu, menu);
         } else {
             inflater.inflate(R.menu.information_reload_menu, menu);
@@ -167,10 +189,12 @@ public class Game2Fragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menuInformation:
+
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                DialogFragment dialogFragment = InformationDialogFragment.newInstance(getResources().getString(R.string.fragment2description));
+                DialogFragment dialogFragment = InformationDialogFragment.newInstance(getResources().getString(R.string.fragment1description));
                 dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 dialogFragment.show(ft, "information");
+
                 break;
             case R.id.menuReload:
                 ((GameActivity) getActivity()).reloadFragment();
@@ -188,19 +212,129 @@ public class Game2Fragment extends Fragment {
         return true;
     }
 
-    class NumberedListAdapter extends ArrayAdapter<NumberedListItem> {
+    private void checkResult(){
+        answered = true;
+        getActivity().invalidateOptionsMenu();
 
-        private Context mContext;
-        private List<NumberedListItem> list;
-        private List<Integer> colors = null;
+        if(defaultList.size() == answersHashMap.size()) {
 
-        public NumberedListAdapter(@NonNull Context context, @LayoutRes ArrayList<NumberedListItem> list) {
-            super(context, 0 , list);
-            mContext = context;
-            this.list = list;
+            ArrayList<String> result = new ArrayList<>();
+            List sortedKeys=new ArrayList(answersHashMap.keySet());
+            Collections.sort(sortedKeys);
+
+            for (int i = 0; i < sortedKeys.size(); i++) {
+
+                String key = Integer.toString(i + 1);
+                result.add(key + ". " + defaultList.get(i));
+
+                if(answersHashMap.get(sortedKeys.get(i)).equals(defaultList.get(i))){
+                    correctAnswer++;
+                    colors.add(android.R.color.holo_green_dark);
+                } else {
+                    wrongAnswer++;
+                    colors.add(android.R.color.holo_red_dark);
+                }
+            }
+
+            Game2Fragment.ColoredListAdapter adapter = new Game2Fragment.ColoredListAdapter(inflatedView.getContext(), result, colors);
+            resultListView.setAdapter(adapter);
+            resultListView.setVisibility(View.VISIBLE);
+
+            answersListView.setOnItemClickListener(null);
+            answersListView.setVisibility(View.INVISIBLE);
+            numberedListVew.setOnItemClickListener(null);
+            numberedListVew.setVisibility(View.INVISIBLE);
+
+        } else {
+            ArtApp.log("Game2Fragment - Something went wrong. Size of the color and definition list are different.");
         }
 
-        public NumberedListAdapter(@NonNull Context context, @LayoutRes ArrayList<NumberedListItem> list, ArrayList<Integer> colors) {
+    }
+
+    class CustomAdapter extends ArrayAdapter<Value>{
+
+        private Context context;
+        private List<Value> values;
+        private int resource;
+
+        public CustomAdapter(@NonNull Context context, int resource, @LayoutRes ArrayList<Value> list) {
+            super(context, 0 , list);
+            this.context = context;
+            this.values = list;
+            this.resource = resource;
+        }
+
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View listItem = LayoutInflater.from(context).inflate(resource,parent,false);
+            Value value = values.get(position);
+            TextView name = (TextView) listItem.findViewById(R.id.listItemValue);
+            name.setText(value.getValue());
+
+            if(value.isSelected){
+                listItem.setBackgroundColor(getResources().getColor(R.color.selectedItem));
+                ((TextView) listItem).setTextColor(getResources().getColor(android.R.color.white));
+            }
+
+            return listItem;
+        }
+    }
+
+    class Value {
+
+        String value;
+        boolean isSelected;
+
+        public Value(String value, boolean isSelected) {
+            this.value = value;
+            this.isSelected = isSelected;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
+    }
+
+    private ArrayList<Value> allFalse(ArrayList<Value> arrayList){
+        ArrayList<Value> temp = arrayList;
+        for ( Value v: temp ) {
+            v.isSelected = false;
+        }
+        return temp;
+    }
+
+    private int getTrueIndex(ArrayList<Value> arrayList){
+        int index = -1;
+        for (int i = 0; i < arrayList.size(); i++) {
+            if(arrayList.get(i).isSelected){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    class ColoredListAdapter extends ArrayAdapter<String> {
+
+        private Context mContext;
+        private List<String> list;
+        private List<Integer> colors;
+
+        public ColoredListAdapter(@NonNull Context context, @LayoutRes ArrayList<String> list, ArrayList<Integer> colors) {
             super(context, 0 , list);
             mContext = context;
             this.list = list;
@@ -210,45 +344,15 @@ public class Game2Fragment extends Fragment {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View listItem = convertView;
-            if(listItem == null)
-                listItem = LayoutInflater.from(mContext).inflate(R.layout.fragment_game2_row_item,parent,false);
-
-            NumberedListItem current = list.get(position);
-
-            TextView number = (TextView) listItem.findViewById(R.id.rowItemNumber);
-            number.setText(current.getNumber());
-
-
-            TextView value = (TextView) listItem.findViewById(R.id.rowItemValue);
-            value.setText(current.getValue());
+            View listItem = LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_1,parent,false);
+            TextView textView = (TextView) listItem.findViewById(android.R.id.text1);
+            textView.setText(list.get(position));
             if(colors != null){
-                number.setBackgroundColor(mContext.getResources().getColor(colors.get(position)));
-                value.setBackgroundColor(mContext.getResources().getColor(colors.get(position)));
+                textView.setBackgroundColor(mContext.getResources().getColor(colors.get(position)));
             }
-
             return listItem;
         }
 
 
-    }
-
-    class NumberedListItem {
-
-        private String number;
-        private String value;
-
-        public NumberedListItem(String number, String value) {
-            this.number = number;
-            this.value = value;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public String getValue() {
-            return value;
-        }
     }
 }

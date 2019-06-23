@@ -42,6 +42,8 @@
     <string name="exit">Exit</string>
     <string name="terms_and_application">Photos of the artworks are used with the permission of the Turku Art Museum. In the case of public domain artworks, the photos are used via Wikimedia commons.</string>
 
+    <string name="correct_answers">Correct answers - </string>
+    <string name="wrong_answers">Wrong answers - </string>
 
     <string name="fragment1description">Pair the left-side words with the right-side sentences! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
     <string name="fragment2description">Choose the right words based on the numbers on the picture! You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
@@ -56,7 +58,7 @@
     <string name="fragment11description">Based on the sentences, you need to choose the right picture. To change the picture, click on the picture! With the HELP button, you can get more sentences. You can reset this game with the button at right upper corner. After you finished, the next game can be started with the arrow at right upper corner.</string>
 
     <string-array name="lesson">
-        <item>PHENOMENA</item>
+        <item>TOPIC</item>
         <item>Food</item>
         <item>People</item>
         <item>Leisure Time</item>

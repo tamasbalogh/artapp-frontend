@@ -123,7 +123,7 @@ public class Game11Fragment extends Fragment {
             sentenceCounter++;
             if(sentenceCounter >= sentences.length) {
                 help.setVisibility(View.GONE);
-                ArtApp.showSnackBar(getActivity().findViewById(R.id.fragmentGame11ConstraintLayout),getString(R.string.there_is_no_more_help));
+                ArtApp.showSnackBarLong(getActivity().findViewById(R.id.fragmentGame11ConstraintLayout),getString(R.string.there_is_no_more_help));
             } else {
                 stringBuilder.insert(0,System.getProperty("line.separator"));
                 stringBuilder.insert(0,sentences[sentenceCounter].toString());
