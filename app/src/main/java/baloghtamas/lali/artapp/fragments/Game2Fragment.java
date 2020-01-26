@@ -219,7 +219,12 @@ public class Game2Fragment extends Fragment {
         if(defaultList.size() == answersHashMap.size()) {
 
             ArrayList<String> result = new ArrayList<>();
-            List sortedKeys=new ArrayList(answersHashMap.keySet());
+            ArrayList<Integer> sortedKeys=new ArrayList();
+
+            for (String key: answersHashMap.keySet()) {
+                sortedKeys.add(new Integer(key));
+            }
+
             Collections.sort(sortedKeys);
 
             for (int i = 0; i < sortedKeys.size(); i++) {
@@ -227,7 +232,7 @@ public class Game2Fragment extends Fragment {
                 String key = Integer.toString(i + 1);
                 result.add(key + ". " + defaultList.get(i));
 
-                if(answersHashMap.get(sortedKeys.get(i)).equals(defaultList.get(i))){
+                if(answersHashMap.get(sortedKeys.get(i).toString()).equals(defaultList.get(i))){
                     correctAnswer++;
                     colors.add(android.R.color.holo_green_dark);
                 } else {

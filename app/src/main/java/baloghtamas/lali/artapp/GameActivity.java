@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import baloghtamas.lali.artapp.data.Language;
 import baloghtamas.lali.artapp.data.PreferencesHelper;
 import baloghtamas.lali.artapp.fragments.Game10Fragment;
 import baloghtamas.lali.artapp.fragments.Game11Fragment;
@@ -158,8 +159,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         setResult(RESULT_CODE_ON_FAILURE,returnIntent);
                         finish();
                     }
-
-
 
                     @Override
                     public void onCancel() {
@@ -339,7 +338,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             RequestParams body = new RequestParams();
             body.add("auth","yTd0Eq6YzDDVQZBL");
             body.add("language",preferencesHelper.getLanguage().getCode());
-            if(preferencesHelper.getLanguage().getCode().equals("en")){
+            if(preferencesHelper.getLanguage().getCode().equals(Language.ENGLISH.getCode()) || preferencesHelper.getLanguage().getCode().equals(Language.FRANCE.getCode())){
                 HashMap<String, Integer> lessons = new HashMap<>();
                 for (int i = 0; i < getResources().getStringArray(R.array.lesson).length; i++) {
                     lessons.put(getResources().getStringArray(R.array.lesson)[i],(i));
